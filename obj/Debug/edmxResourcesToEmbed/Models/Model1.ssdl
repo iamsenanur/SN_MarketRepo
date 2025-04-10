@@ -1,0 +1,228 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DBRR_AIModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="SN_M_calisanListesi">
+    <Key>
+      <PropertyRef Name="calisanID" />
+    </Key>
+    <Property Name="calisanID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="calisanAdi" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="calisanSoyadi" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="isActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SN_M_faturaListesi">
+    <Key>
+      <PropertyRef Name="faturaID" />
+    </Key>
+    <Property Name="faturaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="faturaTutari" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="faturaTarihi" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SN_M_islemler">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="calisanID" Type="int" Nullable="false" />
+    <Property Name="urunID" Type="int" Nullable="false" />
+    <Property Name="islemDate" Type="datetime" Nullable="false" />
+    <Property Name="islemType" Type="int" Nullable="false" />
+    <Property Name="adet" Type="int" Nullable="false" />
+    <Property Name="musteriID" Type="int" Nullable="false" />
+    <Property Name="satisFiyatiID" Type="int" Nullable="false" />
+    <Property Name="faturaID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SN_M_islemTipiListesi">
+    <Key>
+      <PropertyRef Name="islemID" />
+    </Key>
+    <Property Name="islemID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="islemTipi" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SN_M_kategoriListesi">
+    <Key>
+      <PropertyRef Name="kategoriID" />
+    </Key>
+    <Property Name="kategoriID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="kategoriAciklamasi" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="kategoriIcon" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="isActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SN_M_logs">
+    <Key>
+      <PropertyRef Name="logID" />
+    </Key>
+    <Property Name="logID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="tabloAdı" Type="nvarchar" MaxLength="100" />
+    <Property Name="logType" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="logDesc" Type="nvarchar(max)" />
+    <Property Name="logTime" Type="datetime" Nullable="false" />
+    <Property Name="oldValues" Type="nvarchar(max)" />
+    <Property Name="newValues" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="SN_M_Menu">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="menuName" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="menuSirasi" Type="int" Nullable="false" />
+    <Property Name="ısActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SN_M_musteriListesi">
+    <Key>
+      <PropertyRef Name="musteriID" />
+    </Key>
+    <Property Name="musteriID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="musteriAdi" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="musteriSoyadi" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="isActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SN_M_satisListesi">
+    <Key>
+      <PropertyRef Name="satisID" />
+    </Key>
+    <Property Name="satisID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="calisanID" Type="int" Nullable="false" />
+    <Property Name="satisTarihi" Type="datetime" Nullable="false" />
+    <Property Name="satisFiyatiID" Type="int" Nullable="false" />
+    <Property Name="musteriID" Type="int" />
+    <Property Name="satilanUrunID" Type="int" Nullable="false" />
+    <Property Name="adet" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SN_M_SubMenu">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="menuID" Type="int" Nullable="false" />
+    <Property Name="subAdi" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="subAction" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="subSirasi" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SN_M_urunFiyatListesi">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="urunID" Type="int" Nullable="false" />
+    <Property Name="urunFiyati" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="fiyatTarihi" Type="datetime" Nullable="false" />
+    <Property Name="isActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SN_M_urunListesi">
+    <Key>
+      <PropertyRef Name="urunBarkod" />
+    </Key>
+    <Property Name="urunBarkod" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="urunAdi" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="urunKategoriID" Type="int" Nullable="false" />
+    <Property Name="birim" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="urunResimURL" Type="nvarchar" MaxLength="500" Nullable="false" />
+    <Property Name="isActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <Association Name="FK_SN_M_islemler_SN_M_calisanListesi">
+    <End Role="SN_M_calisanListesi" Type="Self.SN_M_calisanListesi" Multiplicity="1" />
+    <End Role="SN_M_islemler" Type="Self.SN_M_islemler" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SN_M_calisanListesi">
+        <PropertyRef Name="calisanID" />
+      </Principal>
+      <Dependent Role="SN_M_islemler">
+        <PropertyRef Name="calisanID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SN_M_islemler_SN_M_urunListesi">
+    <End Role="SN_M_urunListesi" Type="Self.SN_M_urunListesi" Multiplicity="1" />
+    <End Role="SN_M_islemler" Type="Self.SN_M_islemler" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SN_M_urunListesi">
+        <PropertyRef Name="urunBarkod" />
+      </Principal>
+      <Dependent Role="SN_M_islemler">
+        <PropertyRef Name="urunID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SN_M_SubMenu_SN_M_Menu">
+    <End Role="SN_M_Menu" Type="Self.SN_M_Menu" Multiplicity="1" />
+    <End Role="SN_M_SubMenu" Type="Self.SN_M_SubMenu" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SN_M_Menu">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="SN_M_SubMenu">
+        <PropertyRef Name="menuID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SN_M_urunFiyatListesi_SN_M_urunListesi">
+    <End Role="SN_M_urunListesi" Type="Self.SN_M_urunListesi" Multiplicity="1" />
+    <End Role="SN_M_urunFiyatListesi" Type="Self.SN_M_urunFiyatListesi" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SN_M_urunListesi">
+        <PropertyRef Name="urunBarkod" />
+      </Principal>
+      <Dependent Role="SN_M_urunFiyatListesi">
+        <PropertyRef Name="urunID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SN_M_urunListesi_SN_M_kategoriListesi">
+    <End Role="SN_M_kategoriListesi" Type="Self.SN_M_kategoriListesi" Multiplicity="1" />
+    <End Role="SN_M_urunListesi" Type="Self.SN_M_urunListesi" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SN_M_kategoriListesi">
+        <PropertyRef Name="kategoriID" />
+      </Principal>
+      <Dependent Role="SN_M_urunListesi">
+        <PropertyRef Name="urunKategoriID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DBRR_AIModelStoreContainer">
+    <EntitySet Name="SN_M_calisanListesi" EntityType="Self.SN_M_calisanListesi" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SN_M_faturaListesi" EntityType="Self.SN_M_faturaListesi" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SN_M_islemler" EntityType="Self.SN_M_islemler" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SN_M_islemTipiListesi" EntityType="Self.SN_M_islemTipiListesi" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SN_M_kategoriListesi" EntityType="Self.SN_M_kategoriListesi" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SN_M_logs" EntityType="Self.SN_M_logs" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SN_M_Menu" EntityType="Self.SN_M_Menu" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SN_M_musteriListesi" EntityType="Self.SN_M_musteriListesi" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SN_M_satisListesi" EntityType="Self.SN_M_satisListesi" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SN_M_SubMenu" EntityType="Self.SN_M_SubMenu" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SN_M_urunFiyatListesi" EntityType="Self.SN_M_urunFiyatListesi" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SN_M_urunListesi" EntityType="Self.SN_M_urunListesi" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_SN_M_islemler_SN_M_calisanListesi" Association="Self.FK_SN_M_islemler_SN_M_calisanListesi">
+      <End Role="SN_M_calisanListesi" EntitySet="SN_M_calisanListesi" />
+      <End Role="SN_M_islemler" EntitySet="SN_M_islemler" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SN_M_islemler_SN_M_urunListesi" Association="Self.FK_SN_M_islemler_SN_M_urunListesi">
+      <End Role="SN_M_urunListesi" EntitySet="SN_M_urunListesi" />
+      <End Role="SN_M_islemler" EntitySet="SN_M_islemler" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SN_M_SubMenu_SN_M_Menu" Association="Self.FK_SN_M_SubMenu_SN_M_Menu">
+      <End Role="SN_M_Menu" EntitySet="SN_M_Menu" />
+      <End Role="SN_M_SubMenu" EntitySet="SN_M_SubMenu" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SN_M_urunFiyatListesi_SN_M_urunListesi" Association="Self.FK_SN_M_urunFiyatListesi_SN_M_urunListesi">
+      <End Role="SN_M_urunListesi" EntitySet="SN_M_urunListesi" />
+      <End Role="SN_M_urunFiyatListesi" EntitySet="SN_M_urunFiyatListesi" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SN_M_urunListesi_SN_M_kategoriListesi" Association="Self.FK_SN_M_urunListesi_SN_M_kategoriListesi">
+      <End Role="SN_M_kategoriListesi" EntitySet="SN_M_kategoriListesi" />
+      <End Role="SN_M_urunListesi" EntitySet="SN_M_urunListesi" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

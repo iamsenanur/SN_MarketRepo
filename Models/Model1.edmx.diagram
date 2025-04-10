@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c349a9b1737642bb912024e7b32d3a4f" Name="Diagram1" ZoomLevel="77">
+        <EntityTypeShape EntityType="DBRR_AIModel.SN_M_logs" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBRR_AIModel.SN_M_musteriListesi" Width="1.5" PointX="5.25" PointY="10.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBRR_AIModel.SN_M_urunListesi" Width="1.5" PointX="3" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBRR_AIModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBRR_AIModel.SN_M_Menu" Width="1.5" PointX="8.375" PointY="0.75" />
+        <EntityTypeShape EntityType="DBRR_AIModel.SN_M_SubMenu" Width="1.5" PointX="7.375" PointY="8.75" />
+        <AssociationConnector Association="DBRR_AIModel.FK_SN_M_SubMenu_SN_M_Menu" />
+        <EntityTypeShape EntityType="DBRR_AIModel.SN_M_calisanListesi" Width="1.5" PointX="9.375" PointY="8.875" />
+        <EntityTypeShape EntityType="DBRR_AIModel.SN_M_kategoriListesi" Width="1.5" PointX="0.75" PointY="3.5" />
+        <AssociationConnector Association="DBRR_AIModel.FK_SN_M_urunListesi_SN_M_kategoriListesi" />
+        <EntityTypeShape EntityType="DBRR_AIModel.SN_M_urunFiyatListesi" Width="1.5" PointX="3.375" PointY="6.75" />
+        <AssociationConnector Association="DBRR_AIModel.FK_SN_M_urunFiyatListesi_SN_M_urunListesi" />
+        <EntityTypeShape EntityType="DBRR_AIModel.SN_M_islemTipiListesi" Width="1.5" PointX="10.375" PointY="0.75" />
+        <EntityTypeShape EntityType="DBRR_AIModel.SN_M_faturaListesi" Width="1.5" PointX="0.75" PointY="10.75" />
+        <EntityTypeShape EntityType="DBRR_AIModel.SN_M_islemler" Width="1.5" PointX="11.625" PointY="5.5" />
+        <AssociationConnector Association="DBRR_AIModel.FK_SN_M_islemler_SN_M_calisanListesi" />
+        <AssociationConnector Association="DBRR_AIModel.FK_SN_M_islemler_SN_M_urunListesi" />
+        <EntityTypeShape EntityType="DBRR_AIModel.SN_M_satisListesi" Width="1.5" PointX="5.375" PointY="3.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

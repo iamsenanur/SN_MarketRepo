@@ -1,0 +1,177 @@
+﻿<div class="row">
+
+
+    <button onclick="btnMusterEkle()" style="text-align:center" type="button" class="btn btn-secondary" id="alert_demo_5">
+        <i class="icon-user-follow"></i>
+        Müşteri Ekle
+    </button>
+    <div class="panel-body">
+        <div class="col-md-12">
+            <table id="musteriTablosu" class="display table table-striped table-hover dataTable">
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!--müşteri ekle modalı-->
+<div id="musteriEkle-div" style="display:none" class="swal-overlay swal-overlay--show-modal" tabindex="-1">
+    <div class="swal-modal" role="dialog" aria-modal="true">
+        <div class="swal-title" style="">Yeni Müşteri Ekle</div>
+        <div class="swal-content">
+            <input class="form-control" type="text" name="name" id="input-musteriAdi" placeholder="Adınzı giriniz" />
+        </div>
+        <div class="swal-content">
+            <input class="form-control" type="text" name="name" id="input-musteriSoyadi" placeholder="Soyadınızı giriniz" />
+        </div>
+
+        <div class="swal-footer">
+            <div class="swal-button-container">
+                <button class="swal-button swal-button--cancel btn btn-danger" onclick="$('#musteriEkle-div').hide()">Çıkış</button>
+            </div>
+            <div class="swal-button-container">
+                <button onclick="btnMusteriEkle()" class="swal-button swal-button--confirm btn btn-success">Ekle</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--müşteri düzenleme modalı-->
+<div id="musteriDuzenle-div" style="display:none" class="swal-overlay swal-overlay--show-modal" tabindex="-1">
+    <div class="swal-modal" role="dialog" aria-modal="true">
+        <div class="swal-title" style="">Yeni Müşteri Ekle</div>
+        <div class="swal-content">
+            <input class="form-control" type="text" name="name" id="input-musteriID" placeholder="ID" />
+        </div>
+        <div class="swal-content">
+            <input class="form-control" type="text" name="name" id="input-yenimusteriAdi" placeholder="Yeni Adınız" />
+        </div>
+        <div class="swal-content">
+            <input class="form-control" type="text" name="name" id="input-yenimusteriSoyadi" placeholder="Yeni Soyadınız" />
+        </div>
+
+        <div class="swal-footer">
+            <div class="swal-button-container">
+                <button class="swal-button swal-button--cancel btn btn-danger" onclick="$('#musteriDuzenle-div').hide()">Çıkış</button>
+            </div>
+            <div class="swal-button-container">
+                <button onclick="btnMusteriDuzenle()" class="swal-button swal-button--confirm btn btn-success">Kaydet</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/Assets/js/validation.js"></script>
+
+<script src="~/Assets/js/core/jquery-3.7.1.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        setTable(); // Sayfa açıldığında setTable fonksiyonunu çalıştır
+    });
+
+    const btnMusteriEkle = () => {
+        var musteriAdi = $('#input-musteriAdi').val();
+        var musteriSoyadi = $('#input-musteriSoyadi').val();
+
+        // Hata kontrolü
+        if (!validateName(musteriAdi) || isEmpty(musteriAdi)) {
+            $.notify({ message: "Geçersiz veya boş isim!" }, { type: "error", delay: 2000 });
+            return;
+        }
+
+        if (!validateName(musteriSoyadi) || isEmpty(musteriSoyadi)) {
+            $.notify({ message: "Geçersiz veya boş soyisim!" }, { type: "error", delay: 2000 });
+            return;
+        }
+
+        // AJAX ile çalışanın eklenmesi
+        ajaxPost('/Yonetim/insertMusteri', { musteriAdi, musteriSoyadi }, "İşlem başarılı!", "Hata oluştu!");
+      
+        // Modalı kapat
+
+        $('#musteriEkle-div').hide();
+
+    };
+
+    const btnMusterEkle = () => {
+      
+        $('#musteriEkle-div').css('display', '');
+        setTable();
+    }
+    const setTable = () => {
+        $.post('/Yonetim/musteriler', (res) => {
+            var musteriTablosu = $('#musteriTablosu').DataTable({
+
+                searching: false, // Arama kapalı
+                ordering: false,  // Sıralama kapalı
+                paging: false,     // Sayfalama açık
+                destroy: true,
+                data: res,     // JSON verisini tabloya aktarıyoruz
+                columns: [
+
+                    { data: "musteriID", title: "Müşteri ID" },
+                    { data: "musteriAdi", title: "Müşteri Adı" },
+                    { data: "musteriSoyadi", title: "Müşteri Soyadı" },
+                    {
+                        title: "İşlemler",
+                        data: null,
+                        render: function (data, type, row) {
+                            return `
+
+                        <button onclick="editMusteri('${row.musteriID}', '${row.musteriAdi}', '${row.musteriSoyadi}')" class="btn btn-success btn-edit"> <i class="icon-pencil"></i>Düzenle</button>
+                        <button onclick="deleteMusteri(${row.musteriID})" class="btn btn-danger btn-delete"> <i class="icon-user-unfollow"></i>Sil</button>
+
+                     `;
+                        }
+                    }
+                ]
+            });
+
+        });
+    }
+    const btnMusteriDuzenle = () => {
+        var musteriID = $('#input-musteriID').val();
+        var musteriAdi = $('#input-yenimusteriAdi').val();
+        var musteriSoyadi = $('#input-yenimusteriSoyadi').val();
+
+        // Hata kontrolü
+        if (!validateName(musteriAdi) || isEmpty(musteriAdi)) {
+            $.notify({ message: "Geçersiz veya boş isim!" }, { type: "error", delay: 2000 });
+            return;
+        }
+
+        if (!validateName(musteriSoyadi) || isEmpty(musteriSoyadi)) {
+            $.notify({ message: "Geçersiz veya boş soyisim!" }, { type: "error", delay: 2000 });
+            return;
+        }
+
+        // AJAX ile çalışanın güncellenmesi
+        ajaxPost('/Yonetim/updateMusteri', { musteriID, musteriAdi, musteriSoyadi }, "Müşteri güncellendi!", "Güncelleme hatası!");
+      
+
+        // Modalı kapat
+        $('#musteriDuzenle-div').hide();
+        setTable();
+      
+    };
+    const editMusteri = (musteriID, musteriAdi, musteriSoyadi) => {
+        $('#input-musteriID').val(musteriID);
+        $('#input-yenimusteriAdi').val(musteriAdi);
+        $('#input-yenimusteriSoyadi').val(musteriSoyadi);
+        $('#musteriDuzenle-div').show();
+        setTable(); 
+    };
+    const deleteMusteri = (musteriID) => {
+        ajaxPost('/Yonetim/deleteMusteri', { musteriID }, "Müşteri silindi!", "Silme işlemi başarısız!");
+
+        setTable();
+    };
+</script>

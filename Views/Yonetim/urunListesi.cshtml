@@ -1,0 +1,518 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+
+
+
+<!--Kategoriye göre ürün listeleme-->
+<div class="card-body">
+    <div class="col-md-12">
+        <div class="card">
+
+            <div class="card-header">
+                <h4 class="card-title">Ürün Kategorileri</h4>
+            </div>
+            <div class="card-body">
+
+                <div class="row">
+
+                    <div class="row row-demo-grid">
+                        <div class="col-5 col-md-4" >
+
+                            <div class="card-primary" >
+                                <div class="card-body"><h6 style="cursor:pointer;" id="#kategoriEkle-div" onclick="kategoriEkle()">Kategori Ekle</h6></div>
+                            </div>
+                        </div>
+                        <div class="col-7 col-md-8">
+                            <div class="card-primary">
+                                <div class="card-body"><h6 style="cursor:pointer" id="#urunEkle-div" onclick="urunEkle()">Seçili Kategoriye Ürün Ekle</h6></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-5 col-md-4">
+
+                            <div class="nav flex-column nav-pills nav-secondary nav-pills-no-bd nav-pills-icons"
+                                 id="v-pills-tab-with-icon" role="tablist" aria-orientation="vertical">
+                            </div>
+                        </div>
+                        <div class="col-7 col-md-8">
+
+                            <div class="tab-content" id="v-pills-with-icon-tabContent">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Kategori ekleme modalı-->
+<div id="kategori-div" style="display:none" class="swal-overlay swal-overlay--show-modal" tabindex="-1">
+    <div class="swal-modal" role="dialog" aria-modal="true">
+        <div class="swal-title" style="">Yeni Kategori Ekle</div>
+        <div class="swal-content">
+            <input class="form-control" type="text" name="name" id="input-kategoriAdi" placeholder="Kategori Adi" />
+        </div>
+        <div class="swal-footer">
+            <div class="swal-button-container">
+                <button class="swal-button swal-button--cancel btn btn-danger" onclick="$('#kategori-div').hide()">Çıkış</button>
+            </div>
+            <div class="swal-button-container">
+                <button onclick="btnKategoriEkle()" class="swal-button swal-button--confirm btn btn-success">Kaydet</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--ÜrÜn ekleme modalı-->
+<div id="urunEkle-div" style="display:none" class="swal-overlay swal-overlay--show-modal" tabindex="-1">
+    <div class="swal-modal" role="dialog" aria-modal="true">
+        <div class="swal-title" style="">Yeni Ürün Ekle</div>
+
+
+
+        <div> <input type="text" name="name" value="" hidden id="urunKategoriID" /></div>
+
+
+
+        <div class="swal-content">
+            <input class="form-control" type="text" name="name" id="input-urunAdi" placeholder="Ürün Adı" />
+        </div>
+        <div class="swal-content">
+            <select class="form-control selectpicker" id="input-urunBirim" data-live-search="true">
+                <option disabled value="#" selected>Birim Seçiniz..</option>
+                <option value="Kg">Kg</option>
+                <option value="Adet">Adet</option>
+                <option value="Litre">Litre</option>
+            </select>
+        </div>
+        <div class="swal-footer">
+            <div class="swal-button-container">
+                <button class="swal-button swal-button--cancel btn btn-danger" onclick="$('#urunEkle-div').hide()">Çıkış</button>
+            </div>
+            <div class="swal-button-container">
+                <button onclick="btnUrunEkle()" class="swal-button swal-button--confirm btn btn-success">Kaydet</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!--Ürün düzenleme modalı-->
+<div id="urunDuzenle-div" style="display:none" class="swal-overlay swal-overlay--show-modal" tabindex="-1">
+    <div class="swal-modal" role="dialog" aria-modal="true">
+        <div class="swal-title" style="">Ürün Düzenle</div>
+        <div class="swal-content">
+            <input class="form-control" type="text" name="name" id="input-urunBarkod" placeholder="Yeni Ürün Barkodu" />
+        </div>
+        <div class="swal-content">
+            <input class="form-control" type="text" name="name" id="input-yeniurunAdi" placeholder="Yeni Ürün Adı" />
+        </div>
+        <div class="swal-content">
+            <select class="form-control selectpicker" id="input-yeniBirim" data-live-search="true">
+                <option disabled value="#" selected>Birim Seçiniz..</option>
+                <option value="Kg">Kg</option>
+                <option value="Adet">Adet</option>
+                <option value="Litre">Litre</option>
+            </select>
+        </div>
+
+        <div class="swal-footer">
+            <div class="swal-button-container">
+                <button class="swal-button swal-button--cancel btn btn-danger" onclick="$('#urunDuzenle-div').hide()">Çıkış</button>
+            </div>
+            <div class="swal-button-container">
+                <button onclick="btnUrunDuzenle()" class="swal-button swal-button--confirm btn btn-success">Kaydet</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--Ürün taşı modalı-->
+
+<div id="uruntasi-div" style="display:none" class="swal-overlay swal-overlay--show-modal" tabindex="-1">
+    <div class="swal-modal" role="dialog" aria-modal="true">
+        <div class="swal-title" style="">Ürün Kategori Değiştirme</div>
+        <div class="swal-content" hidden>
+            <input class="form-control" type="text" name="name" id="input-mevcutKategori" placeholder="Yeni Ürün Barkodu" />
+        </div>
+        <div class="swal-content">
+            <select class="form-control selectpicker" id="input-yeniKategori" data-live-search="true">
+
+            </select>
+        </div>
+
+        <div class="swal-footer">
+            <div class="swal-button-container">
+                <button class="swal-button swal-button--cancel btn btn-danger" onclick="$('#uruntasi-div').hide()">Çıkış</button>
+            </div>
+            <div class="swal-button-container">
+                <button onclick="btnUruntasi()" class="swal-button swal-button--confirm btn btn-success">Kaydet</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Kategori sil onaylama modalı-->
+<div  id="kategoriSil-div" style="display:none" class="swal-overlay swal-overlay--show-modal" tabindex="-1">
+    <div class="swal-modal" role="dialog" aria-modal="true">
+        <div class="swal-title" style="">UYARI</div><div class="swal-text" style="">Bu kategoriyi silmek istediğinize emin misiniz?</div><div class="swal-footer">
+            <div class="swal-button-container">
+                <input type="text" id="kategoriSil-kategoriID" name="name" value="" hidden />
+                <button class="swal-button swal-button--cancel btn btn-danger" onclick="$('#kategoriSil-div').hide()">Kapat!</button>
+
+                <div class="swal-button__loader">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+
+            </div><div class="swal-button-container">
+
+                <button onclick="btnKategoriSilOnay()" class="swal-button swal-button--confirm btn btn-secondary">Evet silmek istiyorum!</button>
+
+                <div class="swal-button__loader">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Assets/js/validation.js"></script>
+
+<script src="~/Assets/js/core/jquery-3.7.1.min.js"></script>
+
+<script>
+
+
+    //Sayfa açıldığında setUrunListesi fonksiyonunu çalıştır
+    $(document).ready(function () {
+        setUrunListesi();
+    });
+
+    
+    const setUrunListesi = () => {
+        $.post('/Yonetim/urunListesiGetir', function (res) {
+            console.log("Kategoriler:", res);
+
+            let navContainer = $("#v-pills-tab-with-icon");
+            let contentContainer = $("#v-pills-with-icon-tabContent");
+
+            navContainer.empty(); // Önceki içeriği temizle
+            contentContainer.empty(); // Önceki içeriği temizle
+
+            $.each(res, function (index, kategori) {
+                let isActive = index === 0 ? 'active' : '';
+
+                let categoryHtml = `
+               
+             
+                 <div class="nav-link ${isActive}" id="v-pills-${kategori.kategoriID}-tab"
+                data-bs-toggle="pill" href="#v-pills-${kategori.kategoriID}"
+                role="tab" aria-controls="v-pills-${kategori.kategoriID}"
+                aria-selected="${index === 0 ? 'true' : 'false'}"
+                onclick="kategoriSec(${kategori.kategoriID})" style="cursor:pointer;">
+
+                <div class="container">
+                    <div class="row align-items-center"> 
+
+                        <!-- Çöp Kutusu (Sol Taraf) -->
+                        <div class="col-3 d-flex justify-content-start">
+                            <i style="opacity:0.4; cursor:pointer;" class="fas fa-trash-alt delete-icon" onclick="kategoriSil(${kategori.kategoriID})"></i>
+                        </div>
+
+                        <!-- Kategori Bilgisi (Tam Ortada ve Üst Üste İkon + Açıklama) -->
+                        <div class="col-6 d-flex flex-column align-items-center justify-content-center">
+                            ${kategori.kategoriIcon ? `<i class="${kategori.kategoriIcon} kategori-icon"></i>` : ''}                         
+                            <span class="kategori-text">${kategori.kategoriAciklamasi}</span>
+                        </div>
+
+                        <!-- Boşluk Bırakarak Ortalamayı Dengelemek İçin -->
+                        <div class="col-3"></div>
+
+                    </div>
+                </div>
+
+                </div>
+
+
+                 `;
+                navContainer.append(categoryHtml);
+
+
+                let contentHtml = `
+                     <div class="tab-pane fade ${isActive ? 'show active' : ''}" id="v-pills-${kategori.kategoriID}"
+                          role="tabpanel" aria-labelledby="v-pills-${kategori.kategoriID}-tab">
+
+                         <p><strong>${kategori.kategoriAciklamasi} KATEGORİSİNDEKİ ÜRÜNLER</strong></p>
+                         <div id="urunListesi-${kategori.kategoriID}" class="urun-listesi"></div> <!-- Ürün Listesi Gelecek -->
+                     </div>
+                 `;
+                contentContainer.append(contentHtml);
+
+                if (index === 0) {
+                    kategoriSec(kategori.kategoriID);
+                }
+            });
+        });
+    };
+
+
+    //seçilen kategoriye ait ürünlistesini getiren fonksiyon
+    function kategoriSec(kategoriID) {
+
+        $('#urunKategoriID').val(kategoriID);
+
+
+        $.post('/Yonetim/kategoriyegoreUrunListesiGetir', { kategoriID: kategoriID }, function (res) {
+            console.log("Seçilen Kategori:", kategoriID, "Ürünler:", res);
+
+            let urunListesiDiv = $(`#urunListesi-${kategoriID}`);
+            urunListesiDiv.empty(); // Önceki ürün listesini temizle
+
+            if (res.length === 0) {
+                urunListesiDiv.append("<p>Bu kategoriye ait ürün bulunmamaktadır.</p>");
+                return;
+            }
+
+            let tableHtml = `
+                 <table class="table table-striped">
+                     <thead>
+                         <tr>
+                             <th>Ürün Resmi</th>
+                             <th>Ürün Barkod</th>
+                             <th>Ürün Adı</th>
+                             <th>Birim</th>
+                             <th>İşlemler<th>
+
+                         </tr>
+                     </thead>
+                     <tbody>
+                         ${res.map(urun => `
+                             <tr>
+                              <td>
+                                 <img src="${urun.urunResimURL ? '/Assets/img/urunURL/' + urun.urunResimURL : 'https://via.placeholder.com/60'}"
+                                  width="80" height="80" style="object-fit: cover; border-radius: 5px;"
+                                  onerror="this.onerror=null; this.src='https://via.placeholder.com/60';">
+                             </td>
+                             <td>${urun.urunBarkod}</td>
+                             <td>${urun.urunAdi}</td>
+                             <td>${urun.birim}</td>
+                             <td> <div class="btn-group dropend">
+                                 <button type="button" class="btn btn-secondary btn-round dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">İŞLEMLER</button>
+                                 <ul class="dropdown-menu" role="menu" style="">
+                                   <li>
+                                         <a  onclick="urunSil(${urun.urunBarkod})" class="dropdown-item" href="#">Sil</a>
+                                         <a  onclick="editUrun('${urun.urunBarkod}','${urun.urunAdi}','${urun.birim}')"class="dropdown-item" href="#">Düzenle</a>
+                                         <a  onclick="urunTasi('${urun.urunBarkod}')"class="dropdown-item" href="#">Taşı</a>
+
+                                   </li>
+                                 </ul>
+                                    </div>
+                                     </td>
+                             </tr>
+                         `).join('')}
+                     </tbody>
+                 </table>
+             `;
+
+            urunListesiDiv.append(tableHtml);
+        });
+    }
+
+
+
+
+
+
+
+    //ürün ekle buttonu onclicki
+    const urunEkle = () => {
+        $('#urunEkle-div').css('display', '');
+    };
+
+
+    //ürün ekle kaydet buttonu
+    const btnUrunEkle = () => {
+        var urunKategoriID = $('#urunKategoriID').val();
+
+        var urunAdi = $('#input-urunAdi').val();
+        var urunBirim = $('#input-urunBirim').val();
+
+        if (!urunKategoriID) {
+            $.notify({ message: "Lütfen önce bir kategori seçiniz!", type: "error", delay: 2000 });
+            return;
+        }
+
+        if (isEmpty(urunAdi) || isEmpty(urunBirim)) {
+            $.notify({ message: "Lütfen tüm alanları doldurun!", type: "error", delay: 2000 });
+            return;
+        }
+
+        $.post('/Yonetim/urunEkle', { urunKategoriID, urunAdi, urunBirim }, (res) => {
+            if (res == 200) {
+                $.notify({ message: "Ürün başarıyla eklendi!", type: "success", delay: 2000 });
+                kategoriSec(urunKategoriID);
+                $('#urunEkle-div').css('display', 'none');
+            } else {
+                $.notify({ message: "Ürün eklenirken hata oluştu!", type: "error", delay: 2000 });
+            }
+        });
+    };
+
+
+    //ürün sil onclicki
+    const urunSil = (urunBarkod) => {
+        ajaxPost('/Yonetim/deleteUrun', { urunBarkod }, "Ürün  silindi!", "Silme işlemi başarısız!");
+
+        setUrunListesi();
+    }
+
+
+    //kategori sil onclicki
+    const kategoriSil = (kategoriID) => {
+        $('#kategoriSil-div').css('display', '');
+        $('#kategoriSil-kategoriID').val(kategoriID);
+        
+    }
+    //kategori sil onay buton
+    const btnKategoriSilOnay = () => {
+
+        var kategoriID = $('#kategoriSil-kategoriID').val();
+        /*ajaxPost('/Yonetim/deleteKategori', { kategoriID }, "Kategori  silindi!", "Silme işlemi başarısız!");*/
+        $.post('/Yonetim/deleteKategori', { kategoriID }, (res) => {
+            $.notify({ message: "Kategori başarıyla silindi" }, { type: "success", delay: 2000 });
+            setUrunListesi();
+        });
+
+
+        $('#kategoriSil-div').css('display', 'none');
+        
+    }
+
+
+
+
+
+    //kategori ekle buttonu onclicki
+    const kategoriEkle = () => {
+        $('#kategori-div').css('display', '');
+    };
+
+
+    //kategori ekle kaydet buttonu
+    const btnKategoriEkle = () => {
+        var kategoriAdi = $('#input-kategoriAdi').val().toUpperCase();
+
+        if (!validateName(kategoriAdi) || isEmpty(kategoriAdi)) {
+            $.notify({ message: "Geçersiz veya boş kategori adı!" }, { type: "error", delay: 2000 });
+            return;
+        }
+        $.post('/Yonetim/kategoriEkle', { kategoriAdi }, (res) => {
+            console.log(res);
+
+
+            if (res == 200) {
+                $.notify({ message: "Kategori başarıyla eklendi!" }, { type: "success", delay: 2000 });
+                setUrunListesi();
+                $('#kategori-div').css('display', 'none');
+            } else {
+                $.notify({ message: "Kategori eklenirken hata oluştu!", type: "error", delay: 2000 });
+            }
+            setUrunListesi();
+
+        });
+    };
+
+
+    //ürün düzenle onclicki
+    const editUrun = (urunBarkod, urunAdi, birim) => {
+
+        $('#input-urunBarkod').val(urunBarkod);
+        $('#input-yeniurunAdi').val(urunAdi);
+        $('#urunDuzenle-div').show();
+    };
+
+      //ürün düzenle kaydet buttonu
+    const btnUrunDuzenle = () => {
+        var urunBarkod = $('#input-urunBarkod').val();
+        var urunAdi = $('#input-yeniurunAdi').val();
+        var birim = $('#input-yeniBirim').val();
+
+        // Hata kontrolü
+        if (!validateName(urunAdi) || isEmpty(urunAdi)) {
+            $.notify({ message: "Geçersiz veya boş isim!" }, { type: "error", delay: 2000 });
+            return;
+        }
+        // AJAX ile çalışanın güncellenmesi
+        ajaxPost('/Yonetim/updateUrun', { urunBarkod, urunAdi, birim }, "ürün güncellendi!", "Güncelleme hatası!");
+
+        // Modalı kapat
+        $('#urunDuzenle-div').hide();
+        setUrunListesi();
+    };
+
+
+
+
+
+
+
+
+    //ürün taşı onclicki
+    const urunTasi = (urunBarkod,urunKategoriID) => {
+
+        $('#input-mevcutKategori').val(urunBarkod);
+
+        
+        $.post('/Yonetim/getUrunKategorileri', (res) => {
+            console.log("Gelen Kategoriler:", res);
+
+            let selectKategori = $("#input-yeniKategori");
+            selectKategori.empty(); 
+            selectKategori.append('<option value="">Kategori Seçiniz</option>'); // Varsayılan seçenek
+
+            $.each(res, function (index, kategori) {
+                selectKategori.append(`<option value="${kategori.kategoriID}">${kategori.kategoriAciklamasi}</option>`);
+            });
+
+            // Bootstrap SelectPicker'ı güncelle
+            selectKategori.selectpicker('refresh');
+        });
+
+        $('#uruntasi-div').show();
+    }
+
+    //ürün taşı kaydet buttonu
+    const btnUruntasi = () => {
+
+
+        var urunBarkod = $('#input-mevcutKategori').val();
+        var urunKategoriID = $('#input-yeniKategori').val();
+
+        $.post('/Yonetim/tasiUrun', { urunBarkod, urunKategoriID }, (res) => {
+            if (res == 200) {
+                $.notify({ message: "Geçersiz veya boş birim!" }, { type: "error", delay: 2000 });
+                $('#uruntasi-div').hide();
+                setUrunListesi();   
+            }
+            else {
+                $.notify({ message: "Hata" }, { type: "error", delay: 2000 });
+            }
+            
+            
+
+          });
+
+    }
+
+</script>

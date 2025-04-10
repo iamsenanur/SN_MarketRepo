@@ -1,0 +1,169 @@
+﻿
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="page-inner">
+    <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
+        <div>
+            <h3 class="fw-bold mb-3">Dashboard</h3>
+            <h6 class="op-7 mb-2">Market Yönetim Sistemimize Hoşgeldiniz!</h6>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-sm-6 col-md-3">
+            <div class="card card-stats card-round">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-icon">
+                            <div class="icon-big text-center icon-primary bubble-shadow-small">
+                                <i class="fas fa-users"></i>
+                            </div>
+                        </div>
+                        <div class="col col-stats ms-3 ms-sm-0">
+                            <div class="numbers">
+                                <p class="card-category">Müşteri Sayısı</p>
+                                <h4 id="totelMusteri" class="card-title"></h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-3">
+            <div class="card card-stats card-round">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-icon">
+                            <div class="icon-big text-center icon-info bubble-shadow-small">
+                                <i class="fas fa-user-check"></i>
+                            </div>
+                        </div>
+                        <div class="col col-stats ms-3 ms-sm-0">
+                            <div class="numbers">
+                                <p class="card-category">Çalışan Sayısı</p>
+                                 <h4 id="totelCalisan" class="card-title"></h4>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-3">
+            <div class="card card-stats card-round">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-icon">
+                            <div class="icon-big text-center icon-success bubble-shadow-small">
+                                <i class="fas fa-luggage-cart"></i>
+                            </div>
+                        </div>
+                        <div class="col col-stats ms-3 ms-sm-0">
+                            <div class="numbers">
+                                <p class="card-category">Satış Sayısı</p>
+                                <h4 id="totelSatis" class="card-title"></h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-3">
+            <div class="card card-stats card-round">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-icon">
+                            <div class="icon-big text-center icon-secondary bubble-shadow-small">
+                                <i class="far fa-check-circle"></i>
+                            </div>
+                        </div>
+                        <div class="col col-stats ms-3 ms-sm-0">
+                            <div class="numbers">
+                                <p class="card-category">Stok Sayısı</p>
+                                <h4 id="totelStok" class="card-title"></h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+   
+    
+    </div>
+</div>
+<script src="~/Assets/js/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+<link href="~/Assets/css/plugins.css" rel="stylesheet" />
+<!-- Ladda CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Ladda/1.0.6/ladda.min.css" />
+
+<!-- Ladda JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Ladda/1.0.6/spin.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Ladda/1.0.6/ladda.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        totelCalisanHesapla();
+        totelMusteriHesapla();
+        totelSatisHesapla();
+        totelStokHesapla();
+    });
+
+    const totelCalisanHesapla = () => {
+        $.post("/Home/CalisanSayisi", {}, function (data) {
+            if (data.error) {
+                console.warn("Hata:", data.error);
+                return;
+            }
+            $("#totelCalisan").text(data.calisanlar || 0);
+        })
+            .fail(function (error) {
+                console.error("Calışan sayısı alınamadı:", error);
+            });
+    }
+
+    const totelMusteriHesapla = () => {
+        $.post("/Home/MusteriSayisi", {}, function (data) {
+            if (data.error) {
+                console.warn("Hata:", data.error)
+                return;
+            }
+            $("#totelMusteri").text(data.musteriler || 0);
+        })
+            .fail(function (error) {
+                console.error("Müşteri sayısı alıanamdı:", error);
+            });
+    }
+
+    const totelSatisHesapla = () => {
+        $.post("/Home/UrunStokMiktari", {}, function (data) {
+            if (data.error) {
+                console.warn("Hata: ", data.error)
+                return;
+            }
+            $("#totelSatis").text(data.cikan || 0);
+        })
+            .fail(function (error) {
+                console.error("Satış sayısı alınamadı:", error);
+            });
+    }
+
+    const totelStokHesapla = () => {
+        $.post("/Home/UrunStokMiktari", {}, function (data) {
+            if (data.error) {
+                console.warn("Hata: ", data.error)
+                return;
+            }
+            $("#totelStok").text(data.stok || 0);
+        })
+            .fail(function (error) {
+                console.error("Stok bilgisi alınamadı:", error);
+            });
+    }
+
+
+
+</script>

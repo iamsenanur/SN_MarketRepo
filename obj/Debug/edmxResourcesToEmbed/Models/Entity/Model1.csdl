@@ -1,0 +1,213 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DBRR_AIModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="SN_M_calisanListesi">
+    <Key>
+      <PropertyRef Name="calisanID" />
+    </Key>
+    <Property Name="calisanID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="calisanAdi" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="calisanSoyadi" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="SN_M_satisListesi" Relationship="Self.FK_SN_M_satisListesi_SN_M_calisanListesi" FromRole="SN_M_calisanListesi" ToRole="SN_M_satisListesi" />
+  </EntityType>
+  <EntityType Name="SN_M_kategoriListesi">
+    <Key>
+      <PropertyRef Name="kategoriID" />
+    </Key>
+    <Property Name="kategoriID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="kategoriAciklamasi" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="SN_M_urunListesi" Relationship="Self.FK_SN_M_urunListesi_SN_M_kategoriListesi" FromRole="SN_M_kategoriListesi" ToRole="SN_M_urunListesi" />
+  </EntityType>
+  <EntityType Name="SN_M_logs">
+    <Key>
+      <PropertyRef Name="logID" />
+    </Key>
+    <Property Name="logID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="tabloAdı" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="logType" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="logDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="logTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="oldValues" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="newValues" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="SN_M_musteriListesi">
+    <Key>
+      <PropertyRef Name="musteriID" />
+    </Key>
+    <Property Name="musteriID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="musteriAdi" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="musteriSoyadi" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="SN_M_satisListesi" Relationship="Self.FK_SN_M_satisListesi_SN_M_musteriListesi" FromRole="SN_M_musteriListesi" ToRole="SN_M_satisListesi" />
+  </EntityType>
+  <EntityType Name="SN_M_satisListesi">
+    <Key>
+      <PropertyRef Name="satisID" />
+    </Key>
+    <Property Name="satisID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="calisanID" Type="Int32" Nullable="false" />
+    <Property Name="satisTarihi" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="satisFiyatiID" Type="Int32" Nullable="false" />
+    <Property Name="musteriID" Type="Int32" />
+    <Property Name="satilanUrunID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="SN_M_calisanListesi" Relationship="Self.FK_SN_M_satisListesi_SN_M_calisanListesi" FromRole="SN_M_satisListesi" ToRole="SN_M_calisanListesi" />
+    <NavigationProperty Name="SN_M_musteriListesi" Relationship="Self.FK_SN_M_satisListesi_SN_M_musteriListesi" FromRole="SN_M_satisListesi" ToRole="SN_M_musteriListesi" />
+    <NavigationProperty Name="SN_M_urunFiyatListesi" Relationship="Self.FK_SN_M_satisListesi_SN_M_urunFiyatListesi" FromRole="SN_M_satisListesi" ToRole="SN_M_urunFiyatListesi" />
+    <NavigationProperty Name="SN_M_urunListesi" Relationship="Self.FK_SN_M_satisListesi_SN_M_urunListesi" FromRole="SN_M_satisListesi" ToRole="SN_M_urunListesi" />
+    <NavigationProperty Name="SN_M_urunListesi1" Relationship="Self.FK_SN_M_satisListesi_SN_M_urunListesi1" FromRole="SN_M_satisListesi" ToRole="SN_M_urunListesi" />
+  </EntityType>
+  <EntityType Name="SN_M_urunFiyatListesi">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="urunID" Type="Int32" Nullable="false" />
+    <Property Name="urunFiyati" Type="Int32" Nullable="false" />
+    <Property Name="fiyatTarihi" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="SN_M_satisListesi" Relationship="Self.FK_SN_M_satisListesi_SN_M_urunFiyatListesi" FromRole="SN_M_urunFiyatListesi" ToRole="SN_M_satisListesi" />
+    <NavigationProperty Name="SN_M_urunListesi" Relationship="Self.FK_SN_M_urunFiyatListesi_SN_M_urunListesi" FromRole="SN_M_urunFiyatListesi" ToRole="SN_M_urunListesi" />
+  </EntityType>
+  <EntityType Name="SN_M_urunListesi">
+    <Key>
+      <PropertyRef Name="urunBarkod" />
+    </Key>
+    <Property Name="urunBarkod" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="urunAdi" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="urunKategoriID" Type="Int32" Nullable="false" />
+    <Property Name="birim" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="SN_M_kategoriListesi" Relationship="Self.FK_SN_M_urunListesi_SN_M_kategoriListesi" FromRole="SN_M_urunListesi" ToRole="SN_M_kategoriListesi" />
+    <NavigationProperty Name="SN_M_satisListesi" Relationship="Self.FK_SN_M_satisListesi_SN_M_urunListesi" FromRole="SN_M_urunListesi" ToRole="SN_M_satisListesi" />
+    <NavigationProperty Name="SN_M_satisListesi1" Relationship="Self.FK_SN_M_satisListesi_SN_M_urunListesi1" FromRole="SN_M_urunListesi" ToRole="SN_M_satisListesi" />
+    <NavigationProperty Name="SN_M_urunFiyatListesi" Relationship="Self.FK_SN_M_urunFiyatListesi_SN_M_urunListesi" FromRole="SN_M_urunListesi" ToRole="SN_M_urunFiyatListesi" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <Association Name="FK_SN_M_satisListesi_SN_M_calisanListesi">
+    <End Role="SN_M_calisanListesi" Type="Self.SN_M_calisanListesi" Multiplicity="1" />
+    <End Role="SN_M_satisListesi" Type="Self.SN_M_satisListesi" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SN_M_calisanListesi">
+        <PropertyRef Name="calisanID" />
+      </Principal>
+      <Dependent Role="SN_M_satisListesi">
+        <PropertyRef Name="calisanID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SN_M_urunListesi_SN_M_kategoriListesi">
+    <End Role="SN_M_kategoriListesi" Type="Self.SN_M_kategoriListesi" Multiplicity="1" />
+    <End Role="SN_M_urunListesi" Type="Self.SN_M_urunListesi" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SN_M_kategoriListesi">
+        <PropertyRef Name="kategoriID" />
+      </Principal>
+      <Dependent Role="SN_M_urunListesi">
+        <PropertyRef Name="urunKategoriID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SN_M_satisListesi_SN_M_musteriListesi">
+    <End Role="SN_M_musteriListesi" Type="Self.SN_M_musteriListesi" Multiplicity="0..1" />
+    <End Role="SN_M_satisListesi" Type="Self.SN_M_satisListesi" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SN_M_musteriListesi">
+        <PropertyRef Name="musteriID" />
+      </Principal>
+      <Dependent Role="SN_M_satisListesi">
+        <PropertyRef Name="musteriID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SN_M_satisListesi_SN_M_urunFiyatListesi">
+    <End Role="SN_M_urunFiyatListesi" Type="Self.SN_M_urunFiyatListesi" Multiplicity="1" />
+    <End Role="SN_M_satisListesi" Type="Self.SN_M_satisListesi" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SN_M_urunFiyatListesi">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="SN_M_satisListesi">
+        <PropertyRef Name="satisFiyatiID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SN_M_satisListesi_SN_M_urunListesi">
+    <End Role="SN_M_urunListesi" Type="Self.SN_M_urunListesi" Multiplicity="1" />
+    <End Role="SN_M_satisListesi" Type="Self.SN_M_satisListesi" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SN_M_urunListesi">
+        <PropertyRef Name="urunBarkod" />
+      </Principal>
+      <Dependent Role="SN_M_satisListesi">
+        <PropertyRef Name="satilanUrunID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SN_M_satisListesi_SN_M_urunListesi1">
+    <End Role="SN_M_urunListesi" Type="Self.SN_M_urunListesi" Multiplicity="1" />
+    <End Role="SN_M_satisListesi" Type="Self.SN_M_satisListesi" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SN_M_urunListesi">
+        <PropertyRef Name="urunBarkod" />
+      </Principal>
+      <Dependent Role="SN_M_satisListesi">
+        <PropertyRef Name="satilanUrunID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SN_M_urunFiyatListesi_SN_M_urunListesi">
+    <End Role="SN_M_urunListesi" Type="Self.SN_M_urunListesi" Multiplicity="1" />
+    <End Role="SN_M_urunFiyatListesi" Type="Self.SN_M_urunFiyatListesi" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SN_M_urunListesi">
+        <PropertyRef Name="urunBarkod" />
+      </Principal>
+      <Dependent Role="SN_M_urunFiyatListesi">
+        <PropertyRef Name="urunID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DBRR_AIEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="SN_M_calisanListesi" EntityType="Self.SN_M_calisanListesi" />
+    <EntitySet Name="SN_M_kategoriListesi" EntityType="Self.SN_M_kategoriListesi" />
+    <EntitySet Name="SN_M_logs" EntityType="Self.SN_M_logs" />
+    <EntitySet Name="SN_M_musteriListesi" EntityType="Self.SN_M_musteriListesi" />
+    <EntitySet Name="SN_M_satisListesi" EntityType="Self.SN_M_satisListesi" />
+    <EntitySet Name="SN_M_urunFiyatListesi" EntityType="Self.SN_M_urunFiyatListesi" />
+    <EntitySet Name="SN_M_urunListesi" EntityType="Self.SN_M_urunListesi" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <AssociationSet Name="FK_SN_M_satisListesi_SN_M_calisanListesi" Association="Self.FK_SN_M_satisListesi_SN_M_calisanListesi">
+      <End Role="SN_M_calisanListesi" EntitySet="SN_M_calisanListesi" />
+      <End Role="SN_M_satisListesi" EntitySet="SN_M_satisListesi" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SN_M_urunListesi_SN_M_kategoriListesi" Association="Self.FK_SN_M_urunListesi_SN_M_kategoriListesi">
+      <End Role="SN_M_kategoriListesi" EntitySet="SN_M_kategoriListesi" />
+      <End Role="SN_M_urunListesi" EntitySet="SN_M_urunListesi" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SN_M_satisListesi_SN_M_musteriListesi" Association="Self.FK_SN_M_satisListesi_SN_M_musteriListesi">
+      <End Role="SN_M_musteriListesi" EntitySet="SN_M_musteriListesi" />
+      <End Role="SN_M_satisListesi" EntitySet="SN_M_satisListesi" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SN_M_satisListesi_SN_M_urunFiyatListesi" Association="Self.FK_SN_M_satisListesi_SN_M_urunFiyatListesi">
+      <End Role="SN_M_urunFiyatListesi" EntitySet="SN_M_urunFiyatListesi" />
+      <End Role="SN_M_satisListesi" EntitySet="SN_M_satisListesi" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SN_M_satisListesi_SN_M_urunListesi" Association="Self.FK_SN_M_satisListesi_SN_M_urunListesi">
+      <End Role="SN_M_urunListesi" EntitySet="SN_M_urunListesi" />
+      <End Role="SN_M_satisListesi" EntitySet="SN_M_satisListesi" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SN_M_satisListesi_SN_M_urunListesi1" Association="Self.FK_SN_M_satisListesi_SN_M_urunListesi1">
+      <End Role="SN_M_urunListesi" EntitySet="SN_M_urunListesi" />
+      <End Role="SN_M_satisListesi" EntitySet="SN_M_satisListesi" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SN_M_urunFiyatListesi_SN_M_urunListesi" Association="Self.FK_SN_M_urunFiyatListesi_SN_M_urunListesi">
+      <End Role="SN_M_urunListesi" EntitySet="SN_M_urunListesi" />
+      <End Role="SN_M_urunFiyatListesi" EntitySet="SN_M_urunFiyatListesi" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

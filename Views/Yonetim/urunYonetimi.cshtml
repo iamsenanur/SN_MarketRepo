@@ -1,0 +1,779 @@
+﻿<!-- Ürün Seçmek İçin DropdownMenu-->
+<div class="page-inner">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Ürün Seçiniz</h4>
+        </div>
+
+        <div class="form-control-lg">
+            <button id="butonYazisiDegistir" class="btn btn-secondary btn-lg dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Urunler
+            </button>
+            <ul class="dropdown-menu" id="urunDropdownMenu" role="menu">
+                <li>
+
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+
+    <!--
+    <div class="page-header">
+        <h3 class="fw-bold mb-3">Ürün Bilgileri</h3>
+    </div>
+        -->
+
+    <div id="secenekadarAcilma">
+        <!--Yeni Satır-->
+        <div class="row">
+
+            <div class="col-md-3">
+
+                <div class="card card-stats card-round">
+                    <div class="card-body">
+                        <div class="card card-post card-round">
+                            <!-- Dinamik olarak değişecek ürün resmi -->
+                            <img class="card-img-top" src="" alt="Card image cap">
+                            <div class="card-body">
+                                <div class="d-flex">
+                                    <div class="info-post ms-2">
+                                        <p id="urunKategoriDegistir" class="urunAdi">Ürün Adı</p>
+                                        <p id="urunTarihDegistir" class="date text-muted">Günümüzün tarihi</p>
+                                    </div>
+                                </div>
+                                <div class="separator-solid"></div>
+
+                                <h3 class="card-title">
+                                    <a id="urunAdiDegistir" href="#"> Kategori </a>
+                                </h3>
+                                <p id="urunFiyatDegistir" class="card-text">Ürünün Fiyatı</p>
+                                <!--<p id="urunFiyatDegistirYeni" class="card-text" style="font-weight: bold;"></p>-->
+                                <p id="urunBarkodDegistir" class="card-text">Ürünün Barkodu</p>
+                                <p id="urunBirimDegistir" class="card-text">Ürünün Birimi</p>
+                                <!--<a href="#" class="btn btn-secondary btn-rounded btn-sm">Düzenle</a>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+            </div>
+
+
+            <div class="col-md-9">
+                <!--ürün fiyat değişikliği-->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card card-round">
+                            <div class="card-body">
+                                <div class="card-title fw-mediumbold">Ürün Fiyat Değişikliği</div>
+
+
+
+                                <div class="card-list">
+                                    <div class="item-list">
+
+                                        <div class="info-user ms-3">
+                                            <div id="urunFiyatDegistirAd" class="username"></div>
+                                            <div id="urunFiyatDegistirFiyat" class="status"></div>
+                                            <div id="urunFiyatDegistirFiyatYeni" class="status" style="font-weight: bold;"></div>
+                                        </div>
+
+                                        <button id="btnFiyatDegistir" onclick="btnFiyatDegistir(
+                      document.getElementById('urunFiyatDegistirAd').textContent,
+                      parseFloat(document.getElementById('urunFiyatDegistirFiyat').textContent),
+                      parseFloat(document.getElementById('input-kdvOrani').value),
+                      parseFloat(document.getElementById('input-calisanPayi').value),
+                      parseFloat(document.getElementById('input-indirimOrani').value)
+                      )" class="btn btn-icon btn btn-round btn-xs">
+                                            <i class="fas fa-pencil-alt fa"></i>
+                                        </button>
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="col-md-6">
+                        <div class="card card-primary bg-secondary-gradient">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-8">
+                                        <div class="card-title fw-mediumbold">Ürün Stok Miktarı</div>
+                                    </div>
+                                    <div class="col-4">
+
+
+                                        <button onclick="btnStokEkleSon()" class="btn btn-success">
+                                            <span class="btn-label">
+                                                <i class="fa fa-plus"></i>
+                                            </span>
+                                            Stok İşlemleri
+                                        </button>
+                                    </div>
+                                </div>
+
+
+
+
+
+                                @*<div class="row">
+                                        <div class="col-10">
+                                            <div class="card-title fw-mediumbold">Ürün Stok Miktarı</div>
+                                        </div>
+                                        <div class="col-2">
+
+                                            <button onclick="btnStokEkleSon()" type="button" class="btn btn-icon btn-round btn-success">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+
+                                        </div>
+                                    </div>*@
+
+
+
+
+
+
+                                <!--çizgi-->
+
+                                <div class="card-footer">
+                                    <div class="row user-stats text-center">
+                                        <div class="col">
+                                            <div id="girenUrunSayisi" class="number"></div>
+                                            <div class="title">Giren </div>
+                                        </div>
+                                        <div class="col border-start border-white">
+                                            <!-- Dikey çizgi -->
+                                            <div id="cikanUrunSayisi" class="number"></div>
+                                            <div class="title">Çıkan </div>
+                                        </div>
+                                        <div class="col border-start border-white">
+                                            <!-- Dikey çizgi -->
+                                            <div id="stokUrunSayisi" class="number"></div>
+                                            <div class="title">Stok</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="pull-in sparkline-fix chart-as-background">
+                                    <div id="lineChart4">
+                                        <canvas width="392" height="70"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <!--ürün fiyat değişikliği-->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Ürünün Fiyat Geçmişi</div>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table align-items-center mb-0">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col">Tarih</th>
+                                            <th scope="col">Fiyat</th>
+                                            <th scope="col">Değişim</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="urunFiyatGecmisi">
+                                        <!-- Fiyat geçmişi dinamik olarak buraya eklenecek -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <!--Yeni Satır (Kime Ne Zaman Satıldı Görüntülemek için)-->
+        <!--<div class="row">
+
+
+            <div class="col-md-6">
+
+
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-head-row card-tools-still-right">
+                            <div class="card-title">Ürün Satış Bilgileri (Kime Ne Zaman Satıldı)</div>
+                            <div class="card-tools">
+                                <div class="dropdown">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Preloader-->
+        <!--<div id="urunSatisLoader" class="preloader" style="display: none;"></div>
+
+        <div class="card-body">
+            <ol id="urunSatisBilgileri" class="activity-feed">-->
+        <!-- Satış bilgileri buraya jQuery ile dinamik olarak eklenecek -->
+        <!--</ol>
+                </div>
+            </div>
+
+
+
+
+        </div>
+
+
+        <div class="col-md-6">-->
+        <!--ürün stok miktarı göstergesi end-->
+        <!--stok girişi start-->
+        <!-- ÇALIŞAN SEÇME DROPDOWN -->
+        <!--div class="card">-->
+        <!--@*<div class="card-header">
+            <h4 class="card-title">Stok Ekle/Çıkar</h4>
+        </div>*@-->
+        <!--@*<div class="form-control-lg">
+            <button id="calisanDropdownBtn" class="btn btn-secondary btn-lg dropdown-toggle w-100"
+                    type="button" data-bs-toggle="dropdown">
+                Çalışan Seçiniz
+            </button>
+            <ul class="dropdown-menu w-100" id="calisanDropdownMenu"></ul>
+        </div>*@-->
+        <!--</div>-->
+        <!--stok girişi end-->
+        <!--</div>
+        </div>-->
+    </div>
+</div>
+
+
+
+
+<!-- STOK EKLEME/ÇIKARMA MODALI -->
+<div id="urunStokEkle" style="display:none" class="swal-overlay swal-overlay--show-modal" tabindex="-1">
+    <div class="swal-modal" role="dialog" aria-modal="true">
+        <div class="swal-title">Stok Ekle/Çıkar</div>
+        <div class="swal-content">
+
+
+            <div class="form-control-lg">
+                <button id="calisanDropdownBtn" class="btn btn-secondary btn-lg dropdown-toggle w-100"
+                        type="button" data-bs-toggle="dropdown">
+                    Çalışan Seçiniz
+                </button>
+                <ul class="dropdown-menu w-100" id="calisanDropdownMenu"></ul>
+            </div>
+
+
+
+            <label for="input-urunStokBarkodu">Ürün Barkodu</label>
+            <input class="form-control" type="text" id="input-urunStokBarkodu" disabled />
+            <input type="hidden" id="selectedCalisanID" /> <!-- Seçilen Çalışan ID Burada Tutulacak -->
+            <label for="islemType">İşlem Tipi</label>
+            <select class="form-control" id="islemType">
+                <option value="1">Ekle</option>
+                <option value="2">Çıkar</option>
+            </select>
+
+            <label for="urunAdet">Ürün Adeti</label>
+            <input class="form-control" type="text" id="urunAdet" />
+        </div>
+        <div class="swal-footer">
+            <div class="swal-button-container">
+                <button class="swal-button swal-button--cancel btn btn-danger" onclick="$('#urunStokEkle').fadeOut()">Çıkış</button>
+            </div>
+            <div class="swal-button-container">
+                <button onclick="btnUrunStokKaydet()" class="swal-button swal-button--confirm btn btn-success">Kaydet</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Fiyat Düzenleme Modalı start -->
+<!-- Fiyat Düzenleme Modalı -->
+<div id="urunFiyatDuzenleDiv" style="display:none" class="swal-overlay swal-overlay--show-modal" tabindex="-1">
+    <div class="swal-modal" role="dialog" aria-modal="true">
+        <div class="swal-title">Fiyat Düzenle</div>
+        <div class="swal-content">
+            <label for="input-urunBarkoduu">Ürün Barkodu</label>
+            <input class="form-control" type="text" id="input-urunBarkoduu" disabled />
+
+            <label for="input-yeniUrunFiyati">Maliyet Fiyatı (KDV Hariç)</label>
+            <input class="form-control" type="number" id="input-yeniUrunFiyati" placeholder="KDV hariç fiyatı girin"
+                   oninput="hesaplaKDVVeFiyat(); limitDecimalPlaces(event);" />
+
+            <label for="input-indirimOrani">İndirim Oranı (%)</label>
+            <input class="form-control" type="number" id="input-indirimOrani" placeholder="İndirim yüzdesi"
+                   oninput="hesaplaKDVVeFiyat(); limitDecimalPlaces(event);" />
+
+            <label for="input-kdvOrani">KDV Oranı (%)</label>
+            <input class="form-control" type="number" id="input-kdvOrani" placeholder="KDV Oranı"
+                   oninput="hesaplaKDVVeFiyat(); limitDecimalPlaces(event);" />
+
+            <label for="input-calisanPayi">Çalışan Payı (%)</label>
+            <input class="form-control" type="number" id="input-calisanPayi" placeholder="Çalışan payı yüzdesi"
+                   oninput="hesaplaKDVVeFiyat(); limitDecimalPlaces(event);" />
+
+            <label for="input-karPayi">Kar Payı (%)</label>
+            <input class="form-control" type="number" id="input-karPayi" placeholder="Kar payı yüzdesi"
+                   oninput="hesaplaKDVVeFiyat(); limitDecimalPlaces(event);" />
+
+            <label for="input-kdvTutari">KDV Tutarı</label>
+            <input class="form-control" type="text" id="input-kdvTutari" disabled />
+
+            <label for="input-toplamFiyat">KDV Dahil Fiyat</label>
+            <input class="form-control" type="text" id="input-toplamFiyat" disabled />
+        </div>
+        <div class="swal-footer">
+            <div class="swal-button-container">
+                <button class="swal-button swal-button--cancel btn btn-danger" onclick="$('#urunFiyatDuzenleDiv').fadeOut()">Çıkış</button>
+            </div>
+            <div class="swal-button-container">
+                <button onclick="btnUrunFiyatKaydet()" class="swal-button swal-button--confirm btn btn-success">Kaydet</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Fiyat Düzenleme Modalı end -->
+<!-- Tarihi yazdırmak için moment js kullanıldı-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+<link href="~/Assets/css/plugins.css" rel="stylesheet" />
+<!-- Ladda CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Ladda/1.0.6/ladda.min.css" />
+
+<!-- Ladda JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Ladda/1.0.6/spin.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Ladda/1.0.6/ladda.min.js"></script>
+
+<style>
+    /* Preloaderın sayfada ortalanması için gerekli cssler*/
+    .preloader-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.7); /* Hafif şeffaf arka plan */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 10;
+    }
+
+    .preloader {
+        width: 50px;
+        height: 50px;
+        border: 5px solid #f3f3f3;
+        border-top: 5px solid #3498db;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
+
+    /* Butonu ve Ladda.js düğmesini etkileyen bir pozisyon hatasını engellemek için */
+    .card {
+        position: relative;
+    }
+</style>
+<script src="~/Assets/js/core/jquery-3.7.1.min.js"></script>
+<script>
+    let selectedCalisanID = null; //seçilen calisanID burada tutuluyor
+
+    $(document).ready(function () {
+        $('#secenekadarAcilma').hide();
+        setUrunLer(); // Ürün listesini getir
+
+
+        $("#calisanDropdownBtn").click(function () {
+            loadCalisanlar();
+        });
+    });
+
+
+    const loadCalisanlar = () => {
+        $.get("/Yonetim/calisanlar", function (res) {
+            let dropdownMenu = $("#calisanDropdownMenu");
+            dropdownMenu.empty();
+
+            res.forEach(calisan => {
+                let listItem = `<li>
+                <a class="dropdown-item" href="#"
+                   data-id="${calisan.calisanID}"
+                   onclick="selectCalisan(${calisan.calisanID}, '${calisan.calisanAdi}')">
+                    ${calisan.calisanAdi}
+                </a>
+            </li>`;
+                dropdownMenu.append(listItem);
+            });
+        });
+    };
+
+    const selectCalisan = (calisanID, calisanAdi) => {
+        $("#calisanDropdownBtn").text(calisanAdi);
+        $("#selectedCalisanID").val(calisanID);
+        selectedCalisanID = calisanID;
+
+        openStokModal();
+    };
+
+    const btnStokEkleSon = () => {
+        $("#urunStokEkle").fadeIn();
+    }
+
+
+    const openStokModal = () => {
+        $("#selectedCalisanID").val(selectedCalisanID);
+    };
+
+    //urun stok ekle ya da çıkart kaydet buttonu
+    const btnUrunStokKaydet = () => {
+        let calisanID = $("#selectedCalisanID").val();
+        let urunBarkod = $("#input-urunStokBarkodu").val();
+        let islemType = $("#islemType").val();
+        let urunAdet = $("#urunAdet").val();
+
+        if (!calisanID || !urunBarkod || !islemType || !urunAdet || urunAdet <= 0) {
+            $.notify({ message: "Lütfen tüm alanları doldurun!", type: "error", delay: 2000 });
+            return;
+        }
+
+        $.post("/Yonetim/StokEkle", { calisanID, urunID: urunBarkod, islemType, urunAdet }, function (res) {
+            if (res.success) {
+                $.notify({ message: res.message }, { type: "success", delay: 2000 });
+                $('#urunStokEkle').fadeOut();
+                getStokHesapla(urunBarkod);
+            } else {
+                $.notify({ message: res.message }, { type: "error", delay: 2000 });
+            }
+        }).fail(function () {
+            $.notify({ message: "Bağlantı hatası, lütfen tekrar deneyin!" }, { type: "error", delay: 2000 });
+        });
+        $("#selectedCalisanID").val("");
+
+        $("#urunAdet").val([]);
+    };
+    //ürün stok hesaplama
+    //SN_M_islemler tablosundaki urunID=urunBarkod a eşit olan ürüne ait islemType kolonu' ı 1 olan satırlardaki adet değerleri toplanacak-->giren #girenUrunSayisi
+    //SN_M_islemler tablosundaki urunID=urunBarkod a eşit olan ürüne ait islemType kolonu' ı 2 olan satıelardaki adet değerleri toplanacak--> çıkan #cikanUrunSayisi
+    //çıkan-giren -->stok #stokUrunSayisi
+
+    const getStokHesapla = (urunBarkod) => {
+        if (!urunBarkod) {
+            console.error("Ürün barkodu boş!");
+            return;
+        }
+
+        $.post("/Yonetim/UrunStokMiktari", { urunBarkod }, function (data) {
+            if (data.error) {
+                console.warn("Hata:", data.error);
+                return;
+            }
+
+            $("#girenUrunSayisi").text(data.giren || 0);
+            $("#cikanUrunSayisi").text(data.cikan || 0);
+            $("#stokUrunSayisi").text(data.stok || 0);
+        })
+            .fail(function (error) {
+                console.error("Stok bilgisi alınamadı:", error);
+            });
+
+    };
+
+    // Ürün Fiyat Düzenleme Butonu
+    const btnFiyatDegistir = (urunAdi, maliyetFiyati, kdvOrani, calisanPayi, karPayi, indirimOrani) => {
+        $('#input-yeniUrunFiyati').val(maliyetFiyati);
+        $('#input-kdvOrani').val(kdvOrani);
+        $('#input-calisanPayi').val(calisanPayi);
+        $('#input-karPayi').val(karPayi);
+        $('#input-indirimOrani').val(indirimOrani);
+
+        // Güncellenmiş KDV ve fiyat hesaplamasını yap
+        hesaplaKDVVeFiyat();
+
+        // Modalı aç
+        $('#urunFiyatDuzenleDiv').fadeIn();
+    };
+
+    //  **Temel Fiyat Üzerinden KDV ve Nihai Fiyat Hesaplama**
+    const hesaplaKDVVeFiyat = () => {
+        let maliyetFiyati = parseFloat($('#input-yeniUrunFiyati').val()) || 0;
+        let kdvOrani = (parseFloat($('#input-kdvOrani').val()) || 0) / 100;
+        let calisanPayi = (parseFloat($('#input-calisanPayi').val()) || 0) / 100;
+        let karPayi = (parseFloat($('#input-karPayi').val()) || 0) / 100;
+        let indirimOrani = (parseFloat($('#input-indirimOrani').val()) || 0) / 100;
+
+        // **1. Temel fiyatı hesapla (KDV Hariç)**
+        let calisanPayTutari = maliyetFiyati * calisanPayi;
+        let karPayTutari = maliyetFiyati * karPayi;
+        let temelFiyat = maliyetFiyati + calisanPayTutari + karPayTutari;
+
+        // **2. Kampanyalı fiyat var mı?**
+        let indirimliFiyat = indirimOrani > 0 ? temelFiyat * (1 - indirimOrani) : temelFiyat;
+
+        // **3. KDV'yi temel fiyat üzerinden uygula**
+        let kdvTutari = indirimliFiyat * kdvOrani;
+        let toplamFiyat = indirimliFiyat + kdvTutari;
+
+        // **4. Güncellenmiş değerleri UI'ye yaz**
+        $('#input-kdvTutari').val(kdvTutari.toFixed(2) + " TL");
+        $('#input-toplamFiyat').val(toplamFiyat.toFixed(2) + " TL");
+    };
+
+    //  **Fiyat Güncelleme AJAX İsteği**
+    const btnUrunFiyatKaydet = () => {
+        let urunBarkod = $('#input-urunBarkoduu').val().trim();
+
+        // Değerleri al, virgülü noktaya çevir, baştaki/sondaki boşlukları temizle
+        const parseInput = (selector) => {
+            let value = $(selector).val().trim().replace(",", ".");
+            return value === "" || isNaN(value) ? null : Number(value); // Geçersizse null döndür
+        };
+
+        let maliyetFiyati = parseInput('#input-yeniUrunFiyati');
+        let kdvOrani = parseInput('#input-kdvOrani');
+        let calisanPayi = parseInput('#input-calisanPayi');
+        let karPayi = parseInput('#input-karPayi');
+        let indirimOrani = parseInput('#input-indirimOrani');
+
+        // **Boş veya geçersiz değer kontrolü**
+        if (!urunBarkod) {
+            $.notify({ message: "Ürün barkodu boş olamaz!" }, { type: "warning", delay: 2000 });
+            return;
+        }
+        if (maliyetFiyati === null || kdvOrani === null || calisanPayi === null || karPayi === null) {
+            $.notify({ message: "Lütfen tüm alanları doldurun!" }, { type: "warning", delay: 2000 });
+            return;
+        }
+        if (maliyetFiyati < 0 || kdvOrani < 0 || calisanPayi < 0 || karPayi < 0 || indirimOrani < 0) {
+            $.notify({ message: "Lütfen negatif değerler girmeyin!" }, { type: "warning", delay: 2000 });
+            return;
+        }
+
+        $.post('/Yonetim/AddUrunFiyat', {
+            urunBarkod,
+            maliyetFiyati,
+            kdvOrani,
+            calisanPayi,
+            karPayi,
+            indirimOrani
+        }, function (response) {
+            if (response.success) {
+                $.notify({ message: "Fiyat başarıyla eklendi!" }, { type: "success", delay: 2000 });
+                $('#urunFiyatDuzenleDiv').fadeOut();
+                $("#urunFiyatDegistirYeni").text(" Yeni Fiyat: " + response.toplamFiyat + " TL");
+                getUruneGoreFiyatGecmisi(urunBarkod);
+            } else {
+                $.notify({ message: "Fiyat eklenirken hata oluştu: " + response.message }, { type: "error", delay: 2000 });
+            }
+        }).fail(function (xhr) {
+            console.log("Sunucu Hata Detayı:", xhr.responseText);
+            $.notify({ message: "Sunucu hatası! Lütfen tekrar deneyin." }, { type: "error", delay: 2000 });
+        });
+    };
+
+    const limitDecimalPlaces = (event, maxDecimals = 2) => {
+        let value = event.target.value;
+
+        if (value.includes(".")) {
+            let parts = value.split(".");
+            if (parts[1].length > maxDecimals) {
+                // Kullanıcıya uyarı ver
+                $.notify({ message: "Ondalık kısım en fazla 2 basamak olabilir!" }, { type: "warning", delay: 1500 });
+
+                // Fazladan girilen basamakları sil
+                event.target.value = parts[0] + "." + parts[1].slice(0, maxDecimals);
+            }
+        }
+    };
+
+
+    // Ürünleri çek ve listele
+
+    const setUrunLer = () => {
+        $.get('/Yonetim/GetUrunVeFiyatListesi', function (res) {
+            console.log("Ürünler:", res);
+
+            let dropdownMenu = $("#urunDropdownMenu");
+            dropdownMenu.empty(); // Listeyi temizle
+            res.sort((a, b) => new Date(b.FiyatTarihi) - new Date(a.FiyatTarihi));
+
+
+            res.forEach(urun => {
+                let tarih = urun.FiyatTarihi ? moment(urun.FiyatTarihi).format('DD/MM/YYYY') : 'Bilinmiyor';
+
+                // Eğer dropdown içinde aynı barkod varsa tekrar ekleme
+                if (dropdownMenu.find(`[data-id='${urun.urunBarkod}']`).length === 0) {
+                    let listItem = `<a class="dropdown-item" href="#"
+                    data-id="${urun.urunBarkod}"
+                    data-img="${urun.urunResimURL}"
+                    data-birim="${urun.birim}"
+                    data-kategori="${urun.KategoriAciklamasi}"
+                    data-kategori-icon="${urun.KategoriIcon}"
+                    data-fiyat="${urun.UrunFiyat ? urun.UrunFiyat.toFixed(2) : 'Bilinmiyor'}"
+                    data-tarih="${tarih}">
+                    ${urun.urunAdi}
+                </a>`;
+
+                    dropdownMenu.append(listItem);
+                }
+            });
+
+            // Ürün seçildiğinde bilgileri güncelle
+            $("#urunDropdownMenu").off("click").on("click", ".dropdown-item", function (e) {
+                e.preventDefault();
+
+                let selectedUrunBarkod = $(this).data("id");
+                let selectedUrunAdi = $(this).text();
+                let selectedImgUrl = $(this).data("img");
+                let selectedUrunBirim = $(this).data("birim");
+                let selectedUrunKategori = $(this).data("kategori");
+                let selectedUrunKategoriIcon = $(this).data("kategori-icon");
+                let selectedUrunFiyat = $(this).data("fiyat");
+                let selectedUrunTarih = $(this).data("tarih");
+
+                //console.log("Seçilen Ürün:", selectedUrunAdi);
+                //console.log("Barkod:", selectedUrunBarkod);
+                //console.log("Birim:", selectedUrunBirim);
+                //console.log("Kategori:", selectedUrunKategori);
+                //console.log("Kategori İkonu:", selectedUrunKategoriIcon);
+                //console.log("Fiyat:", selectedUrunFiyat);
+                //console.log("Tarih:", selectedUrunTarih);
+
+                $(".card-img-top").attr("src", "/Assets/img/urunURL/" + selectedImgUrl);
+
+                $("#secenekadarAcilma").fadeIn();
+                $("#urunAdiDegistir").text(selectedUrunAdi);
+                $("#urunAdiDegistirr").text(selectedUrunAdi);
+                $("#urunBirimDegistir").text("Birim: " + selectedUrunBirim);
+                $("#urunKategoriDegistir").text("Kategori: " + selectedUrunKategori);
+                $("#urunDropdownBtn").text(selectedUrunAdi);
+                $("#urunBarkodDegistir").text("Barkod Numarası: " + selectedUrunBarkod);
+                $("#butonYazisiDegistir").text(selectedUrunAdi);
+                $("#urunFiyatDegistir").text("Fiyat: " + selectedUrunFiyat + " TL");
+                $("#urunTarihDegistir").text("Fiyat Tarihi: " + selectedUrunTarih);
+                $("#input-urunBarkoduu").val(selectedUrunBarkod);
+                //stok ekleme/çıkarma işlemi için
+                $("#input-urunStokBarkodu").val(selectedUrunBarkod);
+
+
+                $("#urunFiyatDegistirAd").text(selectedUrunAdi);
+                $("#urunFiyatDegistirFiyat").text("Ürün Fiyatı: " + selectedUrunFiyat + " TL");
+
+                //Seçilen ürün barkodunu Satış bilgilerini listeletmek için alıyoruz
+                getUrunSatisBilgileri(selectedUrunBarkod);
+
+                //Seçilen ürün barkodunu O ürüne ait fiyat geçmişini listeletmek için alıyoruz
+                getUruneGoreFiyatGecmisi(selectedUrunBarkod);
+
+                getStokHesapla(selectedUrunBarkod);
+
+                btnStokEkle(selectedUrunBarkod);
+
+                btnUrunStokKaydet(selectedUrunBarkod);
+            });
+        });
+    };
+
+
+
+    // Seçilen Ürünün Fiyat Geçmişini çek ve Listele
+    const getUruneGoreFiyatGecmisi = (urunBarkod) => {
+        let fiyatGecmisiListesi = $("#urunFiyatGecmisi");
+        fiyatGecmisiListesi.empty(); // Önce tabloyu temizleyelim
+
+        $.get('/Yonetim/GetUruneGoreFiyatGecmisi', { urunBarkod: urunBarkod }, function (fiyatlar) {
+            console.log("Fiyat Geçmişi API Yanıtı:", fiyatlar);
+
+            if (fiyatlar.data.length === 0) {
+                fiyatGecmisiListesi.append(`<tr><td colspan="3" class="text-center">Bu ürün için fiyat geçmişi bulunamadı.</td></tr>`);
+            } else {
+                fiyatlar.data.forEach(fiyat => {
+                    let tarih = moment(fiyat.FiyatTarihi).format('DD/MM/YYYY'); // Tarih formatı
+                    let fiyatDegeri = fiyat.Fiyat ? fiyat.Fiyat.toFixed(2) + " TL" : "-";
+                    let degisimIkonu = fiyat.Degisim ? `<i class="fas ${fiyat.Degisim} me-3"></i>` : '';
+
+                    let fiyatItem = `
+                <tr>
+                    <td>${tarih}</td>
+                    <td>${fiyatDegeri}</td>
+                    <td>${degisimIkonu}</td>
+                </tr>`;
+
+                    fiyatGecmisiListesi.append(fiyatItem);
+                });
+            }
+        }).fail(function () {
+            console.log("Fiyat geçmişi yüklenirken hata oluştu.");
+            fiyatGecmisiListesi.append(`<tr><td colspan="3" class="text-center text-danger">Fiyat geçmişi yüklenirken hata oluştu.</td></tr>`);
+        });
+    };
+
+
+
+
+
+    // Seçilen ürünün satış bilgilerini çek ve listele
+    const getUrunSatisBilgileri = (urunBarkod) => {
+        let satisListesi = $("#urunSatisBilgileri");
+        satisListesi.empty(); // Önce listeyi temizleyelim
+
+
+        $.get('/Yonetim/GetUrunSatisBilgileri', { urunBarkod: urunBarkod }, function (satislar) {
+
+            if (satislar.length === 0) {
+                satisListesi.append(`<li class="feed-item"><span class="text">Bu ürüne ait satış bilgisi yok.</span></li>`);
+            } else {
+                let renkler = ["secondary", "success", "info", "warning", "danger"];
+                satislar.forEach((satis, index) => {
+                    let satisTarihi = moment(satis.SatisTarihi).format('DD/MM/YYYY HH:mm');
+                    let renkClass = `feed-item-${renkler[index % renkler.length]}`;
+
+                    let satisItem = `<li class="feed-item ${renkClass}">
+            <time class="date">${satisTarihi}</time>
+            <span class="text">
+                "${urunBarkod}" ID'li ürün "${satis.CalisanAdi}" tarafından "${satis.MusteriAdi}" müşterisine ${satis.Adet} adet satıldı.
+            </span>
+        </li>`;
+                    satisListesi.append(satisItem);
+                });
+            }
+        }).fail(function () {
+            satisListesi.append(`<li class="feed-item"><span class="text">Satış bilgileri yüklenirken hata oluştu.</span></li>`);
+        });
+    };
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+

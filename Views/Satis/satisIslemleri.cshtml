@@ -1,0 +1,236 @@
+﻿
+
+<div class="page-inner">
+
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Satış Yap</h4>
+        </div>
+        <div class="form-control-lg">
+            <button onclick="btnSatisEkle()" id="satisEkle" class="btn btn-secondary btn-lg  w-100" type="button" aria-expanded="false">
+                Satış Ekle
+                <i class="fas fa-cart-plus"></i>
+              
+            </button>
+        </div>
+    </div>
+</div>
+<!--Satis yapma(ekleme) modalı-->
+<div id="satisYap" style="display:none" class="swal-overlay swal-overlay--show-modal" tabindex="-1">
+    <div class="swal-modal" role="dialog" aria-modal="true">
+        <div class="swal-title">Satis Yap</div>
+        <div class="swal-content">
+            <div class="form-control-lg">
+                <button id="calisanlarDropdownBtn" class="btn btn-secondary btn-lg dropdown-toggle w-100"
+                        type="button" data-bs-toggle="dropdown">
+                    Çalışan Seçiniz
+                </button>
+                <ul class="dropdown-menu w-100" id="calisanlarDropdownMenu"></ul>
+            </div>
+            <div class="form-control-lg">
+                <button id="musterilerDropdownBtn" class="btn btn-secondary btn-lg dropdown-toggle w-100"
+                        type="button" data-bs-toggle="dropdown">
+                    Müşteri Seçiniz
+                </button>
+                <ul class="dropdown-menu w-100" id="musterilerDropdownMenu"></ul>
+            </div>
+            <div class="form-control-lg">
+                <button id="urunlerDropdownBtn" class="btn btn-secondary btn-lg dropdown-toggle w-100"
+                        type="button" data-bs-toggle="dropdown">
+                    Ürün Seçiniz
+                </button>
+                <ul class="dropdown-menu w-100" id="urunlerDropdownMenu"></ul>
+            </div>
+            <div class="form-control-lg">
+                <button id="urunFiyatlarDropdownBtn" class="btn btn-secondary btn-lg dropdown-toggle w-100"
+                        type="button" data-bs-toggle="dropdown">
+                    Ürünün Fiyatını Seçiniz
+                </button>
+                <ul class="dropdown-menu w-100" id="urunFiyatlarDropdownMenu"></ul>
+            </div>
+            <label for="urunAdet">Ürün Adeti</label>
+            <input class="form-control" type="text" id="urunAdet" />
+        </div>
+        <div class="swal-footer">
+            <div class="swal-button-container">
+                <button class="swal-button swal-button--cancel btn btn-danger" onclick="$('#satisYap').fadeOut()">Çıkış</button>
+            </div>
+            <div class="swal-button-container">
+                <button onclick="btnSatisYap()" class="swal-button swal-button--confirm btn btn-success">Kaydet</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Assets/js/core/jquery-3.7.1.min.js"></script>
+<!-- Tarihi yazdırmak için moment js kullanıldı-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+<link href="~/Assets/css/plugins.css" rel="stylesheet" />
+<!-- Ladda CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Ladda/1.0.6/ladda.min.css" />
+
+<!-- Ladda JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Ladda/1.0.6/spin.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Ladda/1.0.6/ladda.min.js"></script>
+<script>
+ 
+    $(document).ready(function () {
+        setTable();
+
+
+        $("#calisanlarDropdownBtn").click(function () {
+            loadCalisanlar();
+        });
+        $("#musterilerDropdownBtn").click(function () {
+            loadMusteriler();
+        });
+        $("#urunlerDropdownBtn").click(function () {
+            loadUrunler();
+        });
+        $("#urunFiyatlarDropdownBtn").click(function () {
+            loadUrunFiyatlar();
+        });
+    });
+
+
+
+    const btnSatisEkle = () => {
+        $("#satisYap").fadeIn(); // Modalı aç
+    };
+
+   
+    const loadCalisanlar = () => {
+        $.get("/Satis/calisanlar", function (res) {
+            let dropdownMenu = $("#calisanlarDropdownMenu");
+            dropdownMenu.empty();
+
+            res.forEach(calisan => {
+                let listItem = `<li>
+                <a class="dropdown-item" href="#" onclick="selectCalisan('${calisan.calisanAdi}', ${calisan.calisanID})">
+                    ${calisan.calisanAdi}
+                </a>
+            </li>`;
+                dropdownMenu.append(listItem);
+            });
+        });
+    };
+
+   
+    const selectCalisan = (calisanAdi, calisanID) => {
+        $("#calisanlarDropdownBtn").text(calisanAdi).data("id", calisanID);
+    };
+
+   
+    const loadMusteriler = () => {
+        $.get("/Satis/musteriler", function (res) {
+            let dropdownMenu = $("#musterilerDropdownMenu");
+            dropdownMenu.empty();
+
+            res.forEach(musteri => {
+                let listItem = `<li>
+                <a class="dropdown-item" href="#" onclick="selectMusteri('${musteri.musteriAdi}', ${musteri.musteriID})">
+                    ${musteri.musteriAdi}
+                </a>
+            </li>`;
+                dropdownMenu.append(listItem);
+            });
+        });
+    };
+
+
+    const selectMusteri = (musteriAdi, musteriID) => {
+        $("#musterilerDropdownBtn").text(musteriAdi).data("id", musteriID);
+    };
+
+
+    const loadUrunler = () => {
+        $.get("/Satis/urunler", function (res) {
+            let dropdownMenu = $("#urunlerDropdownMenu");
+            dropdownMenu.empty();
+
+            res.forEach(urun => {
+                let listItem = `<li>
+                <a class="dropdown-item" href="#" onclick="selectUrun('${urun.urunAdi}', ${urun.urunBarkod})">
+                    ${urun.urunAdi}
+                </a>
+            </li>`;
+                dropdownMenu.append(listItem);
+            });
+        });
+    };
+
+  
+    const selectUrun = (urunAdi, urunBarkod) => {
+        $("#urunlerDropdownBtn").text(urunAdi).data("id", urunBarkod);
+        loadUrunFiyatlar(urunBarkod);
+    };
+
+ 
+    const loadUrunFiyatlar = (urunBarkod) => {
+        $.get("/Satis/urunFiyatlari", { urunID: urunBarkod }, function (res) {
+            let dropdownMenu = $("#urunFiyatlarDropdownMenu");
+            dropdownMenu.empty();
+
+            if (res.length === 0) {
+                dropdownMenu.append(`<li><a class="dropdown-item text-muted">Fiyat bilgisi bulunamadı</a></li>`);
+                return;
+            }
+
+            res.forEach(urunFiyat => {
+                let listItem = `<li>
+                <a class="dropdown-item" href="#" onclick="selectUrunFiyat(${urunFiyat.ID}, '${urunFiyat.urunFiyati}')">
+                    ${urunFiyat.urunFiyati} TL
+                </a>
+            </li>`;
+                dropdownMenu.append(listItem);
+            });
+        });
+    };
+
+    const selectUrunFiyat = (ID, urunFiyati) => {
+        console.log("Seçilen Fiyat ID:", ID, "Fiyat:", urunFiyati);
+        $("#urunFiyatlarDropdownBtn").text(urunFiyati + " TL").data("id", ID);
+    };
+
+    const btnSatisYap = () => {
+        let calisanID = $("#calisanlarDropdownBtn").data("id");
+        let musteriID = $("#musterilerDropdownBtn").data("id");
+        let satilanUrunID = $("#urunlerDropdownBtn").data("id");
+        let satisFiyatiID = $("#urunFiyatlarDropdownBtn").data("id");
+        let urunAdet = $("#urunAdet").val();
+
+        console.log("Çalışan ID:", calisanID);
+        console.log("Müşteri ID:", musteriID);
+        console.log("Satılan Ürün ID:", satilanUrunID);
+        console.log("Satış Fiyatı ID:", satisFiyatiID);
+        console.log("Ürün Adedi:", urunAdet);
+
+
+        if (!calisanID || !musteriID || !satilanUrunID || !satisFiyatiID || !urunAdet) {
+            $.notify({ message: "Lütfen tüm alanları doldurun!", type: "error", delay: 2000 });
+            return;
+        }
+
+        $.post("/Satis/satisEkle", {
+            calisanID,
+            musteriID,
+            satilanUrunID,
+            satisFiyatiID,
+            urunAdet
+        }, function (res) {
+            if (res.success) {
+                $.notify({ message: "Satış başarıyla eklendi!", type: "success", delay: 2000 });
+                $('#satisYap').fadeOut();
+            } else {
+                $.notify({ message: "Satış eklenirken hata oluştu!", type: "error", delay: 2000 });
+            }
+        }).fail(function () {
+            $.notify({ message: "Bağlantı hatası, lütfen tekrar deneyin!" }, { type: "error", delay: 2000 });
+        });
+    };
+
+    const setTable = () => {
+    
+    };
+
+   
+</script>

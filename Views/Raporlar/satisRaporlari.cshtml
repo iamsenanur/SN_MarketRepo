@@ -1,0 +1,144 @@
+﻿<div class="page-inner">
+    <!--Seçilen ürüne göre satış bilgilerini getirme-->
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Ürün Seçiniz</h4>
+           
+        </div>
+
+        <div class="form-control-lg">
+            <button id="butonYazisiDegistir" class="btn btn-secondary btn-lg dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Ürünler
+                <i class="fas fa-list"></i>
+            </button>
+            <ul class="dropdown-menu" id="urunDropdownMenu" role="menu"></ul>
+        </div>
+    </div>
+
+    <div id="urunSecenekKadarAcilma">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-head-row card-tools-still-right">
+                    <div class="card-title">Ürün Satış Bilgileri (Kime Ne Zaman Satıldı)</div>
+                </div>
+            </div>
+            <div class="card-body">
+                <ol id="urunSatisBilgileri" class="activity-feed">
+                    <!-- Satış bilgileri buraya eklenecek -->
+                </ol>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="~/Assets/js/core/jquery-3.7.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+<link href="~/Assets/css/plugins.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Ladda/1.0.6/spin.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Ladda/1.0.6/ladda.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#urunSecenekKadarAcilma').hide();
+        seturunler(); // Ürün listesini getir
+
+        $('#urunDropdownMenu').on('click', '.dropdown-item', function () {
+            let urunBarkod = $(this).data('id');
+            let urunAdi = $(this).text();
+
+            // Buton yazısını değiştir
+            $('#butonYazisiDegistir').text(urunAdi);
+
+            // Seçilen ürünün satış bilgilerini getir
+            $('#urunSecenekKadarAcilma').show();
+            getUrunSatisBilgileri(urunBarkod);
+        });
+    });
+
+    // Ürünleri çek ve listele
+    const seturunler = () => {
+        $.get('/Raporlar/GetUrunVeFiyatListesi', function (res) {
+            console.log("Ürünler:", res);
+
+            let dropdownmenu = $("#urunDropdownMenu");
+            dropdownmenu.empty(); // Listeyi temizle
+
+            res.sort((a, b) => new Date(b.FiyatTarihi) - new Date(a.FiyatTarihi));
+
+            res.forEach(urun => {
+                let tarih = urun.FiyatTarihi ? moment(urun.FiyatTarihi).format('DD/MM/YYYY') : 'Bilinmiyor';
+
+                // Eğer dropdown içinde aynı barkod varsa tekrar ekleme
+                if (dropdownmenu.find(`[data-id='${urun.urunBarkod}']`).length === 0) {
+                    let listItem = `<a class="dropdown-item" href="#"
+                    data-id="${urun.urunBarkod}"
+                    data-img="${urun.urunResimURL}"
+                    data-birim="${urun.birim}"
+                    data-kategori="${urun.KategoriAciklamasi}"
+                    data-kategori-icon="${urun.KategoriIcon}"
+                    data-fiyat="${urun.UrunFiyat ? urun.UrunFiyat.toFixed(2) : 'Bilinmiyor'}"
+                    data-tarih="${tarih}">
+                    ${urun.urunAdi}
+                </a>`;
+
+                    dropdownmenu.append(listItem);
+                }
+            });
+        });
+    };
+
+    // Seçilen ürünün satış bilgilerini çek ve listele
+    const getUrunSatisBilgileri = (urunBarkod) => {
+        let satisListesi = $("#urunSatisBilgileri");
+        satisListesi.empty(); // Önce listeyi temizleyelim
+
+        $.get('/Raporlar/GetUrunSatisBilgileri', { urunBarkod: urunBarkod }, function (satislar) {
+            if (satislar.length === 0) {
+                satisListesi.append(`<li class="feed-item"><span class="text">Bu ürüne ait satış bilgisi yok.</span></li>`);
+            } else {
+                let renkler = ["secondary", "success", "info", "warning", "danger"];
+
+                satislar.forEach((satis, index) => {
+                    let satisTarihi = moment(satis.SatisTarihi).format('DD/MM/YYYY HH:mm');
+                    let renkClass = `feed-item feed-item-${renkler[index % renkler.length]}`;
+                    let satisItem = `<li class="${renkClass}">
+                    <time class="date">${satisTarihi}</time>
+                    <span class="text">
+                        <strong>${satis.CalisanAdi}</strong>, <strong>${satis.MusteriAdi}</strong> müşterisine
+                        <strong>${satis.Adet} adet</strong> "${urunBarkod}" ID'li ürünü sattı.
+                    </span>
+                </li>`;
+
+                    satisListesi.append(satisItem);
+                });
+            }
+        }).fail(function () {
+            satisListesi.append(`<li class="feed-item"><span class="text">Satış bilgileri yüklenirken hata oluştu.</span></li>`);
+        });
+    };
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,203 @@
+﻿<div class="page-inner">
+    <!--Seçilen ürüne göre satış bilgilerini getirme-->
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Ürün Seçiniz</h4>
+
+        </div>
+
+        <div class="form-control-lg">
+            <button id="butonYazisiDegistir" class="btn btn-secondary btn-lg dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Ürünler
+                <i class="fas fa-list"></i>
+            </button>
+            <ul class="dropdown-menu" id="urunDropdownMenu" role="menu"></ul>
+        </div>
+    </div>
+
+    <div id="urunSecenekKadarAcilma">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-head-row card-tools-still-right">
+                    <div class="card-title">Ürün Stok Bilgileri</div>
+                </div>
+            </div>
+            <div class="card-body">
+
+                <div class="row user-stats text-center">
+                    <div class="col">
+                        <div id="girenUrunSayisi" class="number"></div>
+                        <div class="title">Giren </div>
+                    </div>
+                    <div class="col border-start border-white">
+                        <!-- Dikey çizgi -->
+                        <div id="cikanUrunSayisi" class="number"></div>
+                        <div class="title">Çıkan </div>
+                    </div>
+                    <div class="col border-start border-white">
+                        <!-- Dikey çizgi -->
+                        <div id="stokUrunSayisi" class="number"></div>
+                        <div class="title">Stok</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    <!--Stok Geçmişi-->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Ürünün Stok Geçmişi</div>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table align-items-center mb-0">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">İşlem Tipi</th>
+                                <th scope="col">Adet</th>
+                                <th scope="col">Tarih</th>
+                            </tr>
+                        </thead>
+                        <tbody id="urunStokGecmisi">
+                            <!-- Fiyat geçmişi dinamik olarak buraya eklenecek -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="~/Assets/js/core/jquery-3.7.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+<link href="~/Assets/css/plugins.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Ladda/1.0.6/spin.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Ladda/1.0.6/ladda.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#urunSecenekKadarAcilma').hide();
+        seturunler(); // Ürün listesini getir
+        totelGirisHesapla();
+        totelSatisHesapla();
+        totelStokHesapla();
+
+
+        $('#urunDropdownMenu').on('click', '.dropdown-item', function () {
+            let urunBarkod = $(this).data('id');
+            let urunAdi = $(this).text();
+
+            // Buton yazısını değiştir
+            $('#butonYazisiDegistir').text(urunAdi);
+
+            // Seçilen ürünün satış bilgilerini getir
+            $('#urunSecenekKadarAcilma').show();
+            getUrunSatisBilgileri(urunBarkod);
+        });
+    });
+
+    // Ürünleri çek ve listele
+    const seturunler = () => {
+        $.get('/Raporlar/GetUrunVeFiyatListesi', function (res) {
+            console.log("Ürünler:", res);
+
+            let dropdownmenu = $("#urunDropdownMenu");
+            dropdownmenu.empty(); // Listeyi temizle
+
+            res.sort((a, b) => new Date(b.FiyatTarihi) - new Date(a.FiyatTarihi));
+
+            res.forEach(urun => {
+                let tarih = urun.FiyatTarihi ? moment(urun.FiyatTarihi).format('DD/MM/YYYY') : 'Bilinmiyor';
+
+                // Eğer dropdown içinde aynı barkod varsa tekrar ekleme
+                if (dropdownmenu.find(`[data-id='${urun.urunBarkod}']`).length === 0) {
+                    let listItem = `<a class="dropdown-item" href="#"
+                    data-id="${urun.urunBarkod}"
+                    data-img="${urun.urunResimURL}"
+                    data-birim="${urun.birim}"
+                    data-kategori="${urun.KategoriAciklamasi}"
+                    data-kategori-icon="${urun.KategoriIcon}"
+                    data-fiyat="${urun.UrunFiyat ? urun.UrunFiyat.toFixed(2) : 'Bilinmiyor'}"
+                    data-tarih="${tarih}">
+                    ${urun.urunAdi}
+                </a>`;
+
+                    dropdownmenu.append(listItem);
+                }
+            });
+        });
+    };
+
+   
+
+
+    const totelGirisHesapla = (urunBarkod) => {
+        $.post("/Raporlar/UrunStokMiktari", { urunBarkod }, function (data) {
+            if (data.error) {
+                console.warn("Hata: ", data.error)
+                return;
+            }
+            $("#girenUrunSayisi").text(data.giren || 0);
+        })
+            .fail(function (error) {
+                console.error("Giren sayısı alınamadı:", error);
+            });
+    }
+
+    const totelSatisHesapla = (urunBarkod) => {
+        $.post("/Raporlar/UrunStokMiktari", { urunBarkod }, function (data) {
+            if (data.error) {
+                console.warn("Hata: ", data.error)
+                return;
+            }
+            $("#cikanUrunSayisi").text(data.cikan || 0);
+        })
+            .fail(function (error) {
+                console.error("Satış sayısı alınamadı:", error);
+            });
+    }
+
+    const totelStokHesapla = (urunBarkod) => {
+        $.post("/Raporlar/UrunStokMiktari", { urunBarkod }, function (data) {
+            if (data.error) {
+                console.warn("Hata: ", data.error)
+                return;
+            }
+            $("#stokUrunSayisi").text(data.stok || 0);
+        })
+            .fail(function (error) {
+                console.error("Stok sayısı alınamadı:", error);
+            });
+    }
+
+
+
+
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

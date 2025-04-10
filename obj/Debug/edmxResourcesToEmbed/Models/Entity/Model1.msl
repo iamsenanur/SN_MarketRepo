@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="DBRR_AIModelStoreContainer" CdmEntityContainer="DBRR_AIEntities">
+    <EntitySetMapping Name="SN_M_calisanListesi">
+      <EntityTypeMapping TypeName="DBRR_AIModel.SN_M_calisanListesi">
+        <MappingFragment StoreEntitySet="SN_M_calisanListesi">
+          <ScalarProperty Name="calisanID" ColumnName="calisanID" />
+          <ScalarProperty Name="calisanAdi" ColumnName="calisanAdi" />
+          <ScalarProperty Name="calisanSoyadi" ColumnName="calisanSoyadi" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SN_M_kategoriListesi">
+      <EntityTypeMapping TypeName="DBRR_AIModel.SN_M_kategoriListesi">
+        <MappingFragment StoreEntitySet="SN_M_kategoriListesi">
+          <ScalarProperty Name="kategoriID" ColumnName="kategoriID" />
+          <ScalarProperty Name="kategoriAciklamasi" ColumnName="kategoriAciklamasi" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SN_M_logs">
+      <EntityTypeMapping TypeName="DBRR_AIModel.SN_M_logs">
+        <MappingFragment StoreEntitySet="SN_M_logs">
+          <ScalarProperty Name="logID" ColumnName="logID" />
+          <ScalarProperty Name="tabloAdı" ColumnName="tabloAdı" />
+          <ScalarProperty Name="logType" ColumnName="logType" />
+          <ScalarProperty Name="logDesc" ColumnName="logDesc" />
+          <ScalarProperty Name="logTime" ColumnName="logTime" />
+          <ScalarProperty Name="oldValues" ColumnName="oldValues" />
+          <ScalarProperty Name="newValues" ColumnName="newValues" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SN_M_musteriListesi">
+      <EntityTypeMapping TypeName="DBRR_AIModel.SN_M_musteriListesi">
+        <MappingFragment StoreEntitySet="SN_M_musteriListesi">
+          <ScalarProperty Name="musteriID" ColumnName="musteriID" />
+          <ScalarProperty Name="musteriAdi" ColumnName="musteriAdi" />
+          <ScalarProperty Name="musteriSoyadi" ColumnName="musteriSoyadi" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SN_M_satisListesi">
+      <EntityTypeMapping TypeName="DBRR_AIModel.SN_M_satisListesi">
+        <MappingFragment StoreEntitySet="SN_M_satisListesi">
+          <ScalarProperty Name="satisID" ColumnName="satisID" />
+          <ScalarProperty Name="calisanID" ColumnName="calisanID" />
+          <ScalarProperty Name="satisTarihi" ColumnName="satisTarihi" />
+          <ScalarProperty Name="satisFiyatiID" ColumnName="satisFiyatiID" />
+          <ScalarProperty Name="musteriID" ColumnName="musteriID" />
+          <ScalarProperty Name="satilanUrunID" ColumnName="satilanUrunID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SN_M_urunFiyatListesi">
+      <EntityTypeMapping TypeName="DBRR_AIModel.SN_M_urunFiyatListesi">
+        <MappingFragment StoreEntitySet="SN_M_urunFiyatListesi">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="urunID" ColumnName="urunID" />
+          <ScalarProperty Name="urunFiyati" ColumnName="urunFiyati" />
+          <ScalarProperty Name="fiyatTarihi" ColumnName="fiyatTarihi" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SN_M_urunListesi">
+      <EntityTypeMapping TypeName="DBRR_AIModel.SN_M_urunListesi">
+        <MappingFragment StoreEntitySet="SN_M_urunListesi">
+          <ScalarProperty Name="urunBarkod" ColumnName="urunBarkod" />
+          <ScalarProperty Name="urunAdi" ColumnName="urunAdi" />
+          <ScalarProperty Name="urunKategoriID" ColumnName="urunKategoriID" />
+          <ScalarProperty Name="birim" ColumnName="birim" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="DBRR_AIModel.sysdiagrams">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

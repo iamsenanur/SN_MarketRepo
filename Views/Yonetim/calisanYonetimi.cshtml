@@ -1,0 +1,201 @@
+﻿
+
+<div class="row">
+
+
+    <button onclick="btnEkle()" style="text-align:center" type="button" class="btn btn-secondary" id="alert_demo_5">
+        <i class="icon-user-follow"></i>
+        Çalışan Ekle
+    </button>
+    <div class="panel-body">
+        <div class="col-md-12">
+            <table id="calisanTablosu" class="display table table-striped table-hover dataTable">
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!--çalışan ekle modalı-->
+<div id="personelEkle-div" style="display:none" class="swal-overlay swal-overlay--show-modal" tabindex="-1">
+    <div class="swal-modal" role="dialog" aria-modal="true">
+        <div class="swal-title" style="">Yeni Çalışan Ekle</div>
+        <div class="swal-content">
+            <input class="form-control" type="text" name="name" id="input-calisanAdi" placeholder="Adınzı giriniz" />
+        </div>
+        <div class="swal-content">
+            <input class="form-control" type="text" name="name" id="input-calisanSoyadi" placeholder="Soyadınızı giriniz" />
+        </div>
+
+        <div class="swal-footer">
+            <div class="swal-button-container">
+                <button class="swal-button swal-button--cancel btn btn-danger" onclick="$('#personelEkle-div').hide()">Çıkış</button>
+            </div>
+            <div class="swal-button-container">
+                <button onclick="btnCalisanEkle()" class="swal-button swal-button--confirm btn btn-success">Ekle</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!--calisan düzenleme modalı-->
+<div id="personelDuzenle-div" style="display:none" class="swal-overlay swal-overlay--show-modal" tabindex="-1">
+    <div class="swal-modal" role="dialog" aria-modal="true">
+        <div class="swal-title" style="">Yeni Çalışan Ekle</div>
+        <div class="swal-content">
+            <input class="form-control" type="text" name="name" id="input-calisanID" placeholder="ID" />
+        </div>
+        <div class="swal-content">
+            <input class="form-control" type="text" name="name" id="input-yenicalisanAdi" placeholder="Yeni Adınız" />
+        </div>
+        <div class="swal-content">
+            <input class="form-control" type="text" name="name" id="input-yenicalisanSoyadi" placeholder="Yeni Soyadınız" />
+        </div>
+
+        <div class="swal-footer">
+            <div class="swal-button-container">
+                <button class="swal-button swal-button--cancel btn btn-danger" onclick="$('#personelDuzenle-div').hide()">Çıkış</button>
+            </div>
+            <div class="swal-button-container">
+                <button onclick="btnCalisanDuzenle()" class="swal-button swal-button--confirm btn btn-success">Kaydet</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Assets/js/validation.js"></script>
+
+<script src="~/Assets/js/core/jquery-3.7.1.min.js"></script>
+<script>
+
+
+    $(document).ready(function () {
+        setTable(); // Sayfa açıldığında setTable fonksiyonunu çalıştır
+    });
+
+
+ 
+    const btnCalisanEkle = () => {
+        var calisanAdi = $('#input-calisanAdi').val();
+        var calisanSoyadi = $('#input-calisanSoyadi').val();
+
+        // Hata kontrolü
+        if (!validateName(calisanAdi) || isEmpty(calisanAdi)) {
+            $.notify({ message: "Geçersiz veya boş isim!" }, { type: "error", delay: 2000 });
+            return;
+        }
+
+        if (!validateName(calisanSoyadi) || isEmpty(calisanSoyadi)) {
+            $.notify({ message: "Geçersiz veya boş soyisim!" }, { type: "error", delay: 2000 });
+            return;
+        }
+
+        // AJAX ile çalışanın eklenmesi
+        ajaxPost('/Yonetim/insertCalisan', { calisanAdi, calisanSoyadi }, "İşlem başarılı!", "Hata oluştu!");    
+        // Modalı kapat
+      
+        $('#personelEkle-div').hide();
+      
+        
+    };
+
+
+
+    const btnEkle = () => {
+        console.log("test");
+        $('#personelEkle-div').css('display', '');
+        setTable();
+    }
+
+
+
+
+
+    const setTable = () => {
+        $.post('/Yonetim/calisanlar', (res) => {
+            var calisanTablosu = $('#calisanTablosu').DataTable({
+
+                searching: false, // Arama kapalı
+                ordering: false,  // Sıralama kapalı
+                paging: false,     // Sayfalama açık
+                destroy: true,
+                data: res,     // JSON verisini tabloya aktarıyoruz
+                columns: [
+
+                    { data: "calisanID", title: "Çalışan ID" },
+                    { data: "calisanAdi", title: "Çalışan Adı" },
+                    { data: "calisanSoyadi", title: "Çalışan Soyadı" },
+                    {
+                        title: "İşlemler",
+                        data: null,
+                        render: function (data, type, row) {
+                            return `
+
+                           <button onclick="editCalisan('${row.calisanID}', '${row.calisanAdi}', '${row.calisanSoyadi}')" class="btn btn-success btn-edit"> <i class="icon-pencil"></i>Düzenle</button>
+                           <button onclick="deleteCalisan(${row.calisanID})" class="btn btn-danger btn-delete"> <i class="icon-user-unfollow"></i>Sil</button>
+
+                        `;
+                        }
+                    }
+                ]
+            });
+        });
+
+
+    }
+
+
+
+    const btnCalisanDuzenle = () => {
+        var calisanID = $('#input-calisanID').val();
+        var calisanAdi = $('#input-yenicalisanAdi').val();
+        var calisanSoyadi = $('#input-yenicalisanSoyadi').val();
+
+        // Hata kontrolü
+        if (!validateName(calisanAdi) || isEmpty(calisanAdi)) {
+            $.notify({ message: "Geçersiz veya boş isim!" }, { type: "error", delay: 2000 });
+            return;
+        }
+
+        if (!validateName(calisanSoyadi) || isEmpty(calisanSoyadi)) {
+            $.notify({ message: "Geçersiz veya boş soyisim!" }, { type: "error", delay: 2000 });
+            return;
+        }
+
+        // AJAX ile çalışanın güncellenmesi
+        ajaxPost('/Yonetim/updateCalisan', { calisanID, calisanAdi, calisanSoyadi }, "Çalışan güncellendi!", "Güncelleme hatası!");
+
+        // Modalı kapat
+        $('#personelDuzenle-div').hide();
+        setTable();
+    };
+
+
+
+
+    const editCalisan = (calisanID, calisanAdi, calisanSoyadi) => {
+        $('#input-calisanID').val(calisanID);
+        $('#input-yenicalisanAdi').val(calisanAdi);
+        $('#input-yenicalisanSoyadi').val(calisanSoyadi);
+        $('#personelDuzenle-div').show();
+       
+    };
+
+
+
+
+    const deleteCalisan = (calisanID) => {
+        ajaxPost('/Yonetim/deleteCalisan', { calisanID }, "Çalışan silindi!", "Silme işlemi başarısız!");
+       
+        setTable();
+    };
+
+
+</script>

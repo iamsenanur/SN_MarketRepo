@@ -17,19 +17,19 @@ Bu proje, ASP.NET MVC ile geliştirilmiş, temel market işlemlerini yönetmeyi 
 ![Müşteri Ekleme](https://github.com/iamsenanur/SN_MarketRepo/raw/main/musteriEkle.png)
 
 ### Satış Yapma
-![Satış Yap](GÖRSEL_LINKİNİ_BURAYA_YAPIŞTIR)
+![Satış Yap](https://github.com/iamsenanur/SN_MarketRepo/raw/main/satisYap.png)
 
 ### Ürün Detayları ve Stok Takibi
-![Ürün Yönetimi](GÖRSEL_LINKİNİ_BURAYA_YAPIŞTIR)
+![Ürün Yönetimi](https://github.com/iamsenanur/SN_MarketRepo/raw/main/urunDetaylariveStokTakibi.png)
 
 ### Et Ürünleri Kategorisi
-![Et Ürünleri](GÖRSEL_LINKİNİ_BURAYA_YAPIŞTIR)
+![Et Ürünleri](https://github.com/iamsenanur/SN_MarketRepo/raw/main/etUrunleriKategorisi.png)
 
 ### Gıda Ürünleri Kategorisi
-![Gıda Ürünleri](GÖRSEL_LINKİNİ_BURAYA_YAPIŞTIR)
+![Gıda Ürünleri](https://github.com/iamsenanur/SN_MarketRepo/raw/main/gidaUrunleriKategorisi.png)
 
 ### Satış Raporları
-![Satış Raporları](GÖRSEL_LINKİNİ_BURAYA_YAPIŞTIR)
+![Satış Raporları](https://github.com/iamsenanur/SN_MarketRepo/raw/main/satisRaporlari.png)
 
 ## 🧰 Kullanılan Teknolojiler
 
@@ -46,5 +46,4 @@ Bu proje, ASP.NET MVC ile geliştirilmiş, temel market işlemlerini yönetmeyi 
 3. `Web.config` dosyasındaki `connectionString` alanını kendi veritabanınıza göre güncelleyin.
 4. Gerekirse başlangıç verilerini elle veya `Entity Framework` aracılığıyla ekleyin.
 5. Uygulamayı `Ctrl + F5` ile çalıştırarak başlatabilirsiniz.
-
 

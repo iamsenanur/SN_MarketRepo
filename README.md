@@ -26,7 +26,7 @@ Bu proje, ASP.NET MVC ile geliştirilmiş, temel market işlemlerini yönetmeyi 
 ![Et Ürünleri](https://github.com/iamsenanur/SN_MarketRepo/raw/main/etUrunleriKategorisi.png)
 
 ### Gıda Ürünleri Kategorisi
-![Gıda Ürünleri](https://github.com/iamsenanur/SN_MarketRepo/raw/main/gidaUrunleriKategorisi.png)
+![Gıda Ürünleri](https://github.com/iamsenanur/SN_MarketRepo/raw/main/gıdaUrunleriKategorisi.png)
 
 ### Satış Raporları
 ![Satış Raporları](https://github.com/iamsenanur/SN_MarketRepo/raw/main/satisRaporlari.png)

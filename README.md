@@ -9,6 +9,7 @@ Bu proje, ASP.NET MVC ile geliştirilmiş, temel market işlemlerini yönetmeyi 
 - Satış Yapma ve Fatura Oluşturma
 - Ürün Fiyat Geçmişi Görüntüleme
 - Satış Raporları (Kime Ne Zaman Satıldı?)
+- -Ürün Fiyat Düzenleme Modal' ı
 - Admin Panel Tasarımı
 
 ## 🖥️ Ekran Görüntüleri
@@ -30,6 +31,9 @@ Bu proje, ASP.NET MVC ile geliştirilmiş, temel market işlemlerini yönetmeyi 
 
 ### Satış Raporları
 ![Satış Raporları](https://github.com/iamsenanur/SN_MarketRepo/raw/main/satisRaporlari.png)
+
+### Ürün Fiyat Düzenleme modalı
+![Ürün Fiyat Düzenleme Modalı](https://github.com/iamsenanur/SN_MarketRepo/raw/main/urunFiyatDuzenleSayfasi.png)
 
 ## 🧰 Kullanılan Teknolojiler
 

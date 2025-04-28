@@ -9,7 +9,7 @@ Bu proje, ASP.NET MVC ile geliştirilmiş, temel market işlemlerini yönetmeyi 
 - Satış Yapma ve Fatura Oluşturma
 - Ürün Fiyat Geçmişi Görüntüleme
 - Satış Raporları (Kime Ne Zaman Satıldı?)
-- -Ürün Fiyat Düzenleme Modal' ı
+- Ürün Fiyat Düzenleme Modal' ı
 - Admin Panel Tasarımı
 
 ## 🖥️ Ekran Görüntüleri
